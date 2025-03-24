@@ -1,0 +1,93 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|d:\\users\\ramir\\source\\repos\\keyfacturation\\vista\\cv_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|solutionrelative:vista\\cv_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB36E4A9-9189-4AD7-AE59-13CE227A3630}|Datos\\Datos.csproj|D:\\Users\\ramir\\source\\repos\\KeyFacturation\\datos\\cd_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB36E4A9-9189-4AD7-AE59-13CE227A3630}|Datos\\Datos.csproj|solutionrelative:datos\\cd_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EAC946B-31E5-4460-9A8F-166CF591C8A9}|Logica\\Logica.csproj|D:\\Users\\ramir\\source\\repos\\KeyFacturation\\logica\\cl_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EAC946B-31E5-4460-9A8F-166CF591C8A9}|Logica\\Logica.csproj|solutionrelative:logica\\cl_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB36E4A9-9189-4AD7-AE59-13CE227A3630}|Datos\\Datos.csproj|D:\\Users\\ramir\\source\\repos\\KeyFacturation\\datos\\conectarbdd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB36E4A9-9189-4AD7-AE59-13CE227A3630}|Datos\\Datos.csproj|solutionrelative:datos\\conectarbdd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CV_KPI.cs",
+              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_KPI.cs",
+              "RelativeDocumentMoniker": "Vista\\CV_KPI.cs",
+              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_KPI.cs",
+              "RelativeToolTip": "Vista\\CV_KPI.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAkwD0AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-22T16:41:11.86Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CL_KPI.cs",
+              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Logica\\CL_KPI.cs",
+              "RelativeDocumentMoniker": "Logica\\CL_KPI.cs",
+              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Logica\\CL_KPI.cs",
+              "RelativeToolTip": "Logica\\CL_KPI.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAD4v2kAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-22T17:25:50.825Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CD_KPI.cs",
+              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Datos\\CD_KPI.cs",
+              "RelativeDocumentMoniker": "Datos\\CD_KPI.cs",
+              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Datos\\CD_KPI.cs",
+              "RelativeToolTip": "Datos\\CD_KPI.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAswIsAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T00:11:57.46Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ConectarBDD.cs",
+              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Datos\\ConectarBDD.cs",
+              "RelativeDocumentMoniker": "Datos\\ConectarBDD.cs",
+              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Datos\\ConectarBDD.cs",
+              "RelativeToolTip": "Datos\\ConectarBDD.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T03:01:54.194Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
