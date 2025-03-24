@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5B2E0A85-23BD-4146-8BCE-70A0B8A4C0E8}|Elementos de la soluci\u00F3n{5B2E0A85-23BD-4146-8BCE-70A0B8A4C0E8}|D:\\Users\\ramir\\source\\repos\\KeyFacturation\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{5B2E0A85-23BD-4146-8BCE-70A0B8A4C0E8}|Elementos de la soluci\u00F3n{5B2E0A85-23BD-4146-8BCE-70A0B8A4C0E8}|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|d:\\users\\ramir\\source\\repos\\keyfacturation\\vista\\cv_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|solutionrelative:vista\\cv_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -39,6 +43,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "README.md",
+              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-03-24T23:50:35.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "CV_KPI.cs",
               "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_KPI.cs",
               "RelativeDocumentMoniker": "Vista\\CV_KPI.cs",
@@ -51,7 +68,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CL_KPI.cs",
               "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Logica\\CL_KPI.cs",
               "RelativeDocumentMoniker": "Logica\\CL_KPI.cs",
@@ -63,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "CD_KPI.cs",
               "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Datos\\CD_KPI.cs",
               "RelativeDocumentMoniker": "Datos\\CD_KPI.cs",
@@ -75,7 +92,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ConectarBDD.cs",
               "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Datos\\ConectarBDD.cs",
               "RelativeDocumentMoniker": "Datos\\ConectarBDD.cs",
