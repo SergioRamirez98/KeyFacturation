@@ -18,9 +18,11 @@ namespace Datos
     public class CD_KPI: CD_EjecutarSP
     {
         #region Properties
-        public List<CM_DatosOperaciones> DatosExcel { get; set; } = new List<CM_DatosOperaciones>();
+        public List<CM_DatosOperacionesExcel> DatosExcel { get; set; } = new List<CM_DatosOperacionesExcel>();
         public List<CM_IndicadoresKPI> IndKPI { get; set; } = new List<CM_IndicadoresKPI>();
-        
+        public List<CM_DatosOperacionesKPIFinal> DatosBDD { get; set; } = new List<CM_DatosOperacionesKPIFinal>();
+
+
         SqlParameter[] lista = null;
 
         public DateTime Fe_KPI { get; set; }
@@ -66,7 +68,7 @@ namespace Datos
             }
             return IndKPI;
         }
-        public List<CM_DatosOperaciones> CargarOperacion()
+        public List<CM_DatosOperacionesExcel> CargarOperacion()
         {
             DatosExcel.Clear();
 
@@ -98,7 +100,7 @@ namespace Datos
                     foreach (DataRow dr in dt.Rows)
                     {
 
-                        CM_DatosOperaciones DatosSeleccionados = new CM_DatosOperaciones
+                        CM_DatosOperacionesExcel DatosSeleccionados = new CM_DatosOperacionesExcel
                         {
                             Interno = Convert.ToString(dr["INTERNO"]),
                             FechaArribo = Convert.ToString(dr["Fecha de arribo"]),
@@ -123,6 +125,67 @@ namespace Datos
            
             return DatosExcel;
 
+        }
+
+        public List<CM_DatosOperacionesKPIFinal> ObtenerInforme() 
+        {
+            DatosBDD.Clear();
+            DataTable dt = new DataTable();
+            try
+            {
+                string sSql = "SP_Obtener_KPIs";
+                List<SqlParameter> listaparametros = new List<SqlParameter>();
+                SqlParameter[] parametros = listaparametros.ToArray();
+
+                dt= ejecutar(sSql, parametros, true);
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("No se ha podido realizar la operación. Error CD_KPI||ObtenerInforme");
+            }
+            if (dt.Rows.Count>0)
+            {
+                cargarCM_DatosBDD(dt);
+            }
+            return DatosBDD;
+        }
+
+        private void cargarCM_DatosBDD(DataTable dt)
+        {
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    CM_DatosOperacionesKPIFinal Datos = new CM_DatosOperacionesKPIFinal
+                    {
+                        ID_KPI = Convert.ToInt32(dr["ID_KPI"]),
+
+                        Fe_KPI = Convert.ToDateTime(dr["Fe_KPI"]),
+                        Cliente = dr["Cliente"].ToString(),
+                        Interno = dr["Interno"].ToString(),
+                        Via = dr["Via"].ToString(),
+                        Canal = dr["Canal"].ToString(),
+                        N_Despacho = dr["N_Despacho"].ToString(),
+
+                        Fe_Arribo = Convert.ToDateTime(dr["Fe_Arribo"]),
+                        Fe_CierreIngreso = Convert.ToDateTime(dr["Fe_CierreIngreso"]),
+                        Fe_FondosAduana = Convert.ToDateTime(dr["Fe_FondosAduana"]),
+                        Fe_DocOriginal = Convert.ToDateTime(dr["Fe_DocOriginal"]),
+                        Fe_Oficializacion = Convert.ToDateTime(dr["Fe_Oficializacion"]),
+                        Fe_RetiroCarga = Convert.ToDateTime(dr["Fe_RetiroCarga"]),
+
+                        TotalDiasHabiles = Convert.ToInt32(dr["TotalDiasHabiles"]),
+                        Resultado = dr["Resultado"].ToString(),
+                        TipoDesvio = dr["TipoDesvio"].ToString(),
+                        MotivoDesvio = dr["MotivoDesvio"].ToString(),
+                        DepositoGiro = dr["Deposito"].ToString(),
+                    };
+
+                    DatosBDD.Add(Datos);
+                }
+
+            }
         }
         private void cargarIndKPI(DataTable dt) 
         {

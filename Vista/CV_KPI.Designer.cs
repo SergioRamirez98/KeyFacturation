@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.Pnl_DatosKPI = new System.Windows.Forms.Panel();
+            this.Btn_Refresh = new System.Windows.Forms.Button();
             this.Txb_DepGiro = new System.Windows.Forms.TextBox();
             this.Lbl_DepGiro = new System.Windows.Forms.Label();
             this.Btn_Buscar = new System.Windows.Forms.Button();
@@ -67,12 +68,15 @@
             this.Lbl_Resultado = new System.Windows.Forms.Label();
             this.Lbl_TotalDias = new System.Windows.Forms.Label();
             this.Btn_Generar = new System.Windows.Forms.Button();
+            this.Btn_Informe = new System.Windows.Forms.Button();
             this.Pnl_DatosKPI.SuspendLayout();
             this.Pnl_ResultadoKPI.SuspendLayout();
             this.SuspendLayout();
             // 
             // Pnl_DatosKPI
             // 
+            this.Pnl_DatosKPI.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Pnl_DatosKPI.Controls.Add(this.Btn_Refresh);
             this.Pnl_DatosKPI.Controls.Add(this.Txb_DepGiro);
             this.Pnl_DatosKPI.Controls.Add(this.Lbl_DepGiro);
             this.Pnl_DatosKPI.Controls.Add(this.Btn_Buscar);
@@ -104,6 +108,16 @@
             this.Pnl_DatosKPI.Name = "Pnl_DatosKPI";
             this.Pnl_DatosKPI.Size = new System.Drawing.Size(776, 225);
             this.Pnl_DatosKPI.TabIndex = 0;
+            // 
+            // Btn_Refresh
+            // 
+            this.Btn_Refresh.Image = global::Vista.Properties.Resources.Refresh;
+            this.Btn_Refresh.Location = new System.Drawing.Point(747, 3);
+            this.Btn_Refresh.Name = "Btn_Refresh";
+            this.Btn_Refresh.Size = new System.Drawing.Size(26, 23);
+            this.Btn_Refresh.TabIndex = 17;
+            this.Btn_Refresh.UseVisualStyleBackColor = true;
+            this.Btn_Refresh.Click += new System.EventHandler(this.Btn_Refresh_Click);
             // 
             // Txb_DepGiro
             // 
@@ -345,6 +359,7 @@
             // 
             // Pnl_ResultadoKPI
             // 
+            this.Pnl_ResultadoKPI.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Pnl_ResultadoKPI.Controls.Add(this.TLP_Indicadores);
             this.Pnl_ResultadoKPI.Controls.Add(this.Cmb_Resultado);
             this.Pnl_ResultadoKPI.Controls.Add(this.Txb_Motivo);
@@ -356,7 +371,7 @@
             this.Pnl_ResultadoKPI.Controls.Add(this.Lbl_TotalDias);
             this.Pnl_ResultadoKPI.Location = new System.Drawing.Point(12, 261);
             this.Pnl_ResultadoKPI.Name = "Pnl_ResultadoKPI";
-            this.Pnl_ResultadoKPI.Size = new System.Drawing.Size(776, 264);
+            this.Pnl_ResultadoKPI.Size = new System.Drawing.Size(776, 258);
             this.Pnl_ResultadoKPI.TabIndex = 1;
             // 
             // TLP_Indicadores
@@ -366,7 +381,7 @@
             this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.16529F));
             this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.83471F));
             this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
+            this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
             this.TLP_Indicadores.Location = new System.Drawing.Point(153, 15);
             this.TLP_Indicadores.Name = "TLP_Indicadores";
             this.TLP_Indicadores.RowCount = 6;
@@ -460,11 +475,22 @@
             this.Btn_Generar.UseVisualStyleBackColor = true;
             this.Btn_Generar.Click += new System.EventHandler(this.Btn_Generar_Click);
             // 
+            // Btn_Informe
+            // 
+            this.Btn_Informe.Location = new System.Drawing.Point(687, 525);
+            this.Btn_Informe.Name = "Btn_Informe";
+            this.Btn_Informe.Size = new System.Drawing.Size(101, 29);
+            this.Btn_Informe.TabIndex = 3;
+            this.Btn_Informe.Text = "Informe KPI";
+            this.Btn_Informe.UseVisualStyleBackColor = true;
+            this.Btn_Informe.Click += new System.EventHandler(this.Btn_Informe_Click);
+            // 
             // CV_KPI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 566);
+            this.Controls.Add(this.Btn_Informe);
             this.Controls.Add(this.Btn_Generar);
             this.Controls.Add(this.Pnl_ResultadoKPI);
             this.Controls.Add(this.Pnl_DatosKPI);
@@ -523,6 +549,8 @@
         private System.Windows.Forms.Label Lbl_DepGiro;
         private System.Windows.Forms.ComboBox Cmb_Resultado;
         private System.Windows.Forms.TableLayoutPanel TLP_Indicadores;
+        private System.Windows.Forms.Button Btn_Refresh;
+        private System.Windows.Forms.Button Btn_Informe;
     }
 }
 

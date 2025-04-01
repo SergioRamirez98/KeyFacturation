@@ -3,6 +3,7 @@ using Modelo;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,13 +14,18 @@ namespace Logica
     public class CL_KPI
     {
         #region Properties
-        public List<CM_DatosOperaciones> DatosExcel { get; set; } = new List<CM_DatosOperaciones>();
+
+
+        public List<CM_DatosOperacionesExcel> DatosExcel { get; set; } = new List<CM_DatosOperacionesExcel>();  
+        public List<CM_DatosOperacionesKPIFinal> DatosBDD { get; set; } = new List<CM_DatosOperacionesKPIFinal>();
         CD_KPI KPI = new CD_KPI();
         CL_Calendario Calendario = new CL_Calendario();
+
+
+
         public DateTime FeIngreso { get; set; }
         public DateTime FeSalida { get; set; }
         public List<CM_IndicadoresKPI> IndKPI { get; set; } = new List<CM_IndicadoresKPI>();
-
 
         public string Fe_KPI { get; set; }
         public string Cliente { get; set; }
@@ -41,19 +47,84 @@ namespace Logica
 
 
         #endregion
-        public List<CM_DatosOperaciones> BuscarInterno()
+        public List<CM_DatosOperacionesExcel> BuscarInterno()
         {
             DatosExcel.Clear();
             convertirDatos(KPI.CargarOperacion());
             return DatosExcel;
         }
+
+        public List<CM_DatosOperacionesExcel> OrdenarColumnas(int valor, List<CM_DatosOperacionesExcel> ListaOperaciones)
+        {
+            if (ListaOperaciones != null)
+            {
+                IOrderedEnumerable<CM_DatosOperacionesExcel> listaOrdenada;
+
+                switch (valor)
+                {
+                    case 0: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => p.Cliente);
+                        break;
+                    case 1: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => p.Interno);
+                        break;
+                    case 2: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => p.Destinacion);
+                        break;
+                    case 3: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => ParseFecha(p.FechaArribo));
+                        break;
+                    case 4: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => ParseFecha(p.Oficializacion));
+                        break;
+                    case 5: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => ParseFecha(p.Salida));
+                        break;
+                    case 6: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => ParseFecha(p.Fondos));
+                        break;
+                    case 7: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => p.Giro);
+                        break;
+                    case 8: 
+                        listaOrdenada = ListaOperaciones.OrderBy(p => p.Canal);
+                        break;
+                    default:
+                        listaOrdenada = ListaOperaciones.OrderBy(p => p.Cliente);
+                        break;
+                }
+
+                return listaOrdenada.ToList();
+            }
+            else return ListaOperaciones;
+            
+        }
+        private DateTime ParseFecha(string fecha)
+        {
+            DateTime fechaParseada;
+            try
+            {
+                fechaParseada = Convert.ToDateTime(fecha);
+                return fechaParseada;
+            }
+            catch (Exception)
+            {
+                return DateTime.MinValue;
+            }
+        }
+
         public List<CM_IndicadoresKPI> ObtenerValoresdeIndicadores()
         {
             IndKPI.Clear();
             IndKPI = KPI.ObtenerDatos();
             return IndKPI;
         }
-
+        public List<CM_DatosOperacionesKPIFinal> ObtenerInformeKPI() 
+        {
+            DatosBDD.Clear();
+            DatosBDD = KPI.ObtenerInforme();
+            return DatosBDD;
+        }
         public int CalcularResultado()
         {
             validarFechas();
@@ -65,7 +136,7 @@ namespace Logica
             pasarDatos(2);
             KPI.InsertarEnBDD();
         }
-        private void convertirDatos(List<CM_DatosOperaciones> DatosOperaciones) 
+        private void convertirDatos(List<CM_DatosOperacionesExcel> DatosOperaciones) 
         {
             obtenerFechaReciente(DatosOperaciones);
             foreach (var item in DatosOperaciones)
@@ -79,7 +150,7 @@ namespace Logica
             }
             DatosExcel=DatosOperaciones;
         }
-        private void obtenerFechaReciente(List<CM_DatosOperaciones> DatosOperaciones) 
+        private void obtenerFechaReciente(List<CM_DatosOperacionesExcel> DatosOperaciones) 
         {
             foreach (var fechaDeposito in DatosOperaciones)
             {
@@ -162,10 +233,9 @@ namespace Logica
                     break;
             }
         }
-        
-        public List<CM_DatosOperaciones> filtrarOperaciones(string Dato) 
+        public List<CM_DatosOperacionesExcel> filtrarOperaciones(string Dato) 
         {
-            List<CM_DatosOperaciones> DatosFiltrados = new List<CM_DatosOperaciones>();
+            List<CM_DatosOperacionesExcel> DatosFiltrados = new List<CM_DatosOperacionesExcel>();
             DatosFiltrados = DatosExcel;
             if (!string.IsNullOrEmpty(Dato))
             {

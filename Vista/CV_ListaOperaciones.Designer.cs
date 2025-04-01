@@ -42,6 +42,7 @@
             this.DTGV_ListaOperaciones.TabIndex = 0;
             this.DTGV_ListaOperaciones.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DTGV_ListaOperaciones_CellContentClick);
             this.DTGV_ListaOperaciones.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DTGV_ListaOperaciones_CellContentDoubleClick);
+            this.DTGV_ListaOperaciones.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DTGV_ListaOperaciones_ColumnHeaderMouseClick);
             this.DTGV_ListaOperaciones.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DTGV_ListaOperaciones_KeyDown);
             // 
             // Txb_BusquedaRapida

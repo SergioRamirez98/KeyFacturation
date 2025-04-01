@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plantilla KPI</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 25mm;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 10px;
+        }
+
+        table.border {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            table.border th, table.border td {
+                padding: 5px;
+                border: 1px solid black;
+                font-size: 12px;
+            }
+
+        .containerPrincipal {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 60%; /* Reducido el ancho de los cuadros */
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .header-table td {
+                border: 1px solid black;
+                text-align: center;
+                font-size: 15px;
+                padding: 5px;
+                font-weight: bold;
+            }
+
+        .info-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+            .info-table td {
+                border: 1px solid black;
+                padding: 5px;
+                font-size: 11px;
+                text-align: left;
+                vertical-align: top;
+            }
+
+                .info-table td:first-child {
+                    width: 40%; /* Mantiene el ancho fijo para la primera columna */
+                    white-space: nowrap;
+                }
+
+                .info-table td:last-child {
+                    width: 60%; /* Permite que la segunda columna se expanda según el contenido */
+                    word-wrap: break-word;
+                }
+
+        .spacer {
+            height: 15px;
+        }
+
+        .large-spacer {
+            height: 100px;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: left;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="containerPrincipal">
+        <table class="header-table">
+            <tr>
+                <td style="width: 30%;">@OC</td>
+                <td style="width: 40%;">INDICADORES DE OPERACIÓN DE IMPORTACIÓN</td>
+                <td style="width: 30%;">@NUMERO</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="container">
+        <div class="title">Datos Generales</div>
+        <table class="info-table">
+            <!-- Primeras 10 filas -->
+            <tr><td>Fecha</td><td>@HoyFecha</td></tr>
+            <tr><td>Cliente</td><td>@Cliente</td></tr>
+            <tr><td>Vía</td><td>@Vía</td></tr>
+            <tr><td>Canal</td><td>@Canal</td></tr>
+            <tr><td>Despacho</td><td>@Despacho</td></tr>
+            <tr><td>Ingreso de mercadería</td><td>@IngresoMercadería</td></tr>
+            <tr><td>Cierre de ingreso a Terminal</td><td>@CierreIngreso</td></tr>
+            <tr><td>Fondos Aduana</td><td>@FondosAduana</td></tr>
+            <tr><td>Documentación original</td><td>@DocOriginal</td></tr>
+            <tr><td>Oficialización</td><td>@Oficialización</td></tr>
+            <tr><td>Retiro de carga</td><td>@Retiro de carga</td></tr>
+        </table>
+
+        <div class="spacer"></div>
+
+        <div class="title">Información Adicional</div>
+        <!-- Otras 2 filas con dos columnas -->
+        <table class="info-table">
+            <tr><td>Total de días hábiles</td><td>@TotalDiasHabiles</td></tr>
+            <tr><td>Resultado</td><td>@Resultado</td></tr>
+        </table>
+
+        <div class="large-spacer"></div>
+
+        <div class="title">Detalles de Desvío</div>
+        <!-- Últimas 2 filas con posibilidad de extenderse -->
+        <table class="info-table">
+            <tr><td>Tipo desvio</td><td>@TipoDesvio</td></tr>
+            <tr><td>Motivo</td><td>@Motivo</td></tr>
+        </table>
+
+        <div class="spacer"></div>
+
+        <div class="title">Aprobación</div>
+        <!-- Última fila con etiquetas -->
+        <table class="info-table">
+            <tr>
+                <td style="text-align: center; font-weight: bold;">Aprobado por</td>
+                <td style="text-align: center;">@Usuario</td>
+                <td style="text-align: center; font-weight: bold;">Última revisión</td>
+                <td style="text-align: center;">@FechaUltimaRevision</td>
+            </tr>
+        </table>
+
+        <!-- Espacio para imagen -->
+        <div class="large-spacer"></div>
+        <div style="text-align: center;">
+            <img src="@Imagen" alt="Imagen de referencia" width="100" height="100">
+        </div>
+    </div>
+</body>
+</html>

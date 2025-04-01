@@ -4,3 +4,9 @@ D:\Users\ramir\source\repos\KPI+PreFacturacion\Servicios\bin\Debug\Servicios.dll
 D:\Users\ramir\source\repos\KPI+PreFacturacion\Servicios\bin\Debug\Servicios.pdb
 D:\Users\ramir\source\repos\KPI+PreFacturacion\Servicios\obj\Debug\Servicios.dll
 D:\Users\ramir\source\repos\KPI+PreFacturacion\Servicios\obj\Debug\Servicios.pdb
+D:\Users\ramir\source\repos\KeyFacturation\Servicios\bin\Debug\Servicios.dll
+D:\Users\ramir\source\repos\KeyFacturation\Servicios\bin\Debug\Servicios.pdb
+D:\Users\ramir\source\repos\KeyFacturation\Servicios\obj\Debug\Servicios.csproj.AssemblyReference.cache
+D:\Users\ramir\source\repos\KeyFacturation\Servicios\obj\Debug\Servicios.csproj.CoreCompileInputs.cache
+D:\Users\ramir\source\repos\KeyFacturation\Servicios\obj\Debug\Servicios.dll
+D:\Users\ramir\source\repos\KeyFacturation\Servicios\obj\Debug\Servicios.pdb

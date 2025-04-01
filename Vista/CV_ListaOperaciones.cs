@@ -18,8 +18,9 @@ namespace Vista
         #region Properties
 
         CL_KPI KPI = new CL_KPI();
-        CM_DatosOperaciones DatosKPI = new CM_DatosOperaciones();
-        public delegate void OperacionSeleccionadaHandler(CM_DatosOperaciones DatosKPI);
+        List<CM_DatosOperacionesExcel> ListaDatos = new List<CM_DatosOperacionesExcel>();
+        CM_DatosOperacionesExcel DatosKPI = new CM_DatosOperacionesExcel();
+        public delegate void OperacionSeleccionadaHandler(CM_DatosOperacionesExcel DatosKPI);
         public event OperacionSeleccionadaHandler OperacionSeleccionada;
 
         #endregion
@@ -48,7 +49,9 @@ namespace Vista
         }
         private void cargarDatosDTGV() 
         {
-            DTGV_ListaOperaciones.DataSource = KPI.BuscarInterno();
+            ListaDatos.Clear();
+            ListaDatos = KPI.BuscarInterno();
+            DTGV_ListaOperaciones.DataSource = ListaDatos;
         }
 
         private void DTGV_ListaOperaciones_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -90,9 +93,44 @@ namespace Vista
 
         private void Txb_BusquedaRapida_TextChanged(object sender, EventArgs e)
         {
+
             if (!string.IsNullOrEmpty(Txb_BusquedaRapida.Text)) DTGV_ListaOperaciones.DataSource = KPI.filtrarOperaciones(Txb_BusquedaRapida.Text);
             else { DTGV_ListaOperaciones.DataSource = KPI.BuscarInterno(); }
             
+        }
+
+        private void DTGV_ListaOperaciones_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(0, ListaDatos);
+                    break;
+                case 1:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(1, ListaDatos);
+                    break;
+                case 2:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(2, ListaDatos);
+                    break;
+                case 3:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(3, ListaDatos);
+                    break;
+                case 4:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(4, ListaDatos);
+                    break;
+                case 5:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(5, ListaDatos);
+                    break;
+                case 6:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(6, ListaDatos);
+                    break;
+                case 7:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(7, ListaDatos);
+                    break;
+                case 8:
+                    DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(8, ListaDatos);
+                    break;
+            }
         }
     }
 }

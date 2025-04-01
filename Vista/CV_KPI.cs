@@ -19,7 +19,7 @@ namespace Vista
 
         CL_KPI KPI = new CL_KPI();
 
-        public delegate void OperacionSeleccionadaHandler(CM_DatosOperaciones DatosKPI);
+        public delegate void OperacionSeleccionadaHandler(CM_DatosOperacionesExcel DatosKPI);
         public event OperacionSeleccionadaHandler OperacionSeleccionada;
         int diasHabiles = 0;
         public List<CM_IndicadoresKPI> IndKPI { get; set; } = new List<CM_IndicadoresKPI>();
@@ -41,6 +41,7 @@ namespace Vista
             {
                 pasarDatos(2);
                 KPI.GuardarEnBDD();
+                generarPDF();
             }
             catch (Exception ex)
             {
@@ -61,10 +62,9 @@ namespace Vista
             Listado.ShowDialog();
             calcularKPI();
         }
-        private void seleccionOperacion(CM_DatosOperaciones DatosKPI)
+        private void seleccionOperacion(CM_DatosOperacionesExcel DatosKPI)
         {
             Mtxb_Arribo.Text = DatosKPI.FechaArribo;
-            Mtxb_RetiroCarga.Text = DatosKPI.Salida;
             Mtxb_Fondos.Text = DatosKPI.Fondos;
             Mtxb_Oficializacion.Text = DatosKPI.Oficializacion;
             Txb_Canal.Text = DatosKPI.Canal;
@@ -91,6 +91,8 @@ namespace Vista
 
                 }
             }
+            Mtxb_RetiroCarga.Text = DatosKPI.Salida;
+            calcularKPI();
         }
         private void configurarComboBox()
         {
@@ -219,6 +221,11 @@ namespace Vista
             }
         }
 
+        private void generarPDF() 
+        {
+
+        }
+
         private void Mtxb_RetiroCarga_TextChanged(object sender, EventArgs e)
         {
             if (Mtxb_RetiroCarga.MaskCompleted && Mtxb_Arribo.MaskCompleted)
@@ -287,5 +294,17 @@ namespace Vista
             }            
         }
 
+        private void Btn_Refresh_Click(object sender, EventArgs e)
+        {
+            CServ_Limpiar.LimpiarPanelBox(Pnl_DatosKPI);
+            CServ_Limpiar.LimpiarPanelBox(Pnl_ResultadoKPI);
+            cargarControles();
+        }
+
+        private void Btn_Informe_Click(object sender, EventArgs e)
+        {
+            CV_Informes Informes = new CV_Informes();
+            Informes.Show();
+        }
     }
 }
