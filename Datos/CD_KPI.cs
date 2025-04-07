@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Modelo;
-
 using System.IO;
 using ExcelDataReader;
 using System.Linq;
@@ -71,8 +70,8 @@ namespace Datos
         public List<CM_DatosOperacionesExcel> CargarOperacion()
         {
             DatosExcel.Clear();
-
-            string DireccionDelExcel = @"C:\Users\ramir\OneDrive\Documentos\kpi.xlsx"; //La dirección del archivo
+            string rutaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string DireccionDelExcel = Path.Combine(rutaDocumentos, "kpi.xlsx");//La dirección del archivo
 
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             /*ExcelDataReader usa codificaciones especiales para leer archivos de Excel en formato .xls y .xlsx.  Algunos sistemas pueden no tener habilitada esta codificación, 
@@ -126,7 +125,6 @@ namespace Datos
             return DatosExcel;
 
         }
-
         public List<CM_DatosOperacionesKPIFinal> ObtenerInforme() 
         {
             DatosBDD.Clear();
@@ -150,58 +148,10 @@ namespace Datos
             }
             return DatosBDD;
         }
-
-        private void cargarCM_DatosBDD(DataTable dt)
+        public int InsertarEnBDD()
         {
-            if (dt.Rows.Count > 0)
-            {
-                foreach (DataRow dr in dt.Rows)
-                {
-                    CM_DatosOperacionesKPIFinal Datos = new CM_DatosOperacionesKPIFinal
-                    {
-                        ID_KPI = Convert.ToInt32(dr["ID_KPI"]),
-
-                        Fe_KPI = Convert.ToDateTime(dr["Fe_KPI"]),
-                        Cliente = dr["Cliente"].ToString(),
-                        Interno = dr["Interno"].ToString(),
-                        Via = dr["Via"].ToString(),
-                        Canal = dr["Canal"].ToString(),
-                        N_Despacho = dr["N_Despacho"].ToString(),
-
-                        Fe_Arribo = Convert.ToDateTime(dr["Fe_Arribo"]),
-                        Fe_CierreIngreso = Convert.ToDateTime(dr["Fe_CierreIngreso"]),
-                        Fe_FondosAduana = Convert.ToDateTime(dr["Fe_FondosAduana"]),
-                        Fe_DocOriginal = Convert.ToDateTime(dr["Fe_DocOriginal"]),
-                        Fe_Oficializacion = Convert.ToDateTime(dr["Fe_Oficializacion"]),
-                        Fe_RetiroCarga = Convert.ToDateTime(dr["Fe_RetiroCarga"]),
-
-                        TotalDiasHabiles = Convert.ToInt32(dr["TotalDiasHabiles"]),
-                        Resultado = dr["Resultado"].ToString(),
-                        TipoDesvio = dr["TipoDesvio"].ToString(),
-                        MotivoDesvio = dr["MotivoDesvio"].ToString(),
-                        DepositoGiro = dr["Deposito"].ToString(),
-                    };
-
-                    DatosBDD.Add(Datos);
-                }
-
-            }
-        }
-        private void cargarIndKPI(DataTable dt) 
-        {
-            foreach (DataRow dr in dt.Rows) 
-            {
-                CM_IndicadoresKPI kpi = new CM_IndicadoresKPI {
-                    Via = dr["Via"].ToString(),
-                    NoSatisfactorio = Convert.ToInt32(dr["NoSatisfactorio"]),
-                    Requerido = Convert.ToInt32(dr["Requerido"]),
-                    Excelente = Convert.ToInt32(dr["Excelente"]),
-                };
-                IndKPI.Add(kpi);
-            }            
-        }
-        public void InsertarEnBDD() 
-        {
+            DataTable dt = new DataTable();
+            int ID_KPI = 0;
             try
             {
                 string sSql = "SP_InsertarKPI";
@@ -260,14 +210,152 @@ namespace Datos
                 listaParametros.Add(param_TipoDesvio);
                 listaParametros.Add(param_Motivo);
                 lista = listaParametros.ToArray();
+                
+                dt=  ejecutar(sSql, lista, true);
+                if (dt.Rows.Count > 0)
+                {
+                    ID_KPI = Convert.ToInt32(dt.Rows[0]["ID_KPI"]);
+                }
+                return ID_KPI;
 
-                ejecutar(sSql, lista, false);
-           
             }
             catch (Exception)
             {
 
                 throw new Exception("No se ha podido realizar la operación. Error CD_KPI||InsertarEnBDD.");
+            }
+        }
+        public void ObtenerKPI(int ID_KPI) 
+        {
+
+            try
+            {
+                DataTable dt= new DataTable();
+                string sSql = "SP_DatosKPI_PDF";
+                SqlParameter param_ID_KPI = new SqlParameter("@ID_KPI", SqlDbType.Int);
+                param_ID_KPI.Value = ID_KPI;
+
+
+                List<SqlParameter> listaParametros = new List<SqlParameter>();
+                listaParametros.Add(param_ID_KPI);
+                lista = listaParametros.ToArray();
+
+                dt = ejecutar(sSql, lista, true);
+                if (dt.Rows.Count > 0)
+                {
+                    CM_DatosKPI_PDF.ID_KPI = Convert.ToInt32(dt.Rows[0]["ID_KPI"]);
+                    CM_DatosKPI_PDF.Fe_KPI = Convert.ToDateTime(dt.Rows[0]["Fe_KPI"]);
+                    CM_DatosKPI_PDF.Cliente = dt.Rows[0]["Cliente"].ToString();
+                    CM_DatosKPI_PDF.Interno = dt.Rows[0]["Interno"].ToString();
+                    CM_DatosKPI_PDF.Via = dt.Rows[0]["Via"].ToString();
+                    CM_DatosKPI_PDF.Canal = dt.Rows[0]["Canal"].ToString();
+                    CM_DatosKPI_PDF.N_Despacho = dt.Rows[0]["N_Despacho"].ToString();
+                    CM_DatosKPI_PDF.Fe_Arribo = Convert.ToDateTime(dt.Rows[0]["Fe_Arribo"]);
+                    CM_DatosKPI_PDF.Fe_CierreIngreso = string.IsNullOrWhiteSpace(dt.Rows[0]["Fe_CierreIngreso"].ToString())
+                        ? (DateTime?)null : Convert.ToDateTime(dt.Rows[0]["Fe_CierreIngreso"]);
+                    CM_DatosKPI_PDF.Fe_FondosAduana = string.IsNullOrWhiteSpace(dt.Rows[0]["Fe_FondosAduana"].ToString())
+                        ? (DateTime?)null : Convert.ToDateTime(dt.Rows[0]["Fe_FondosAduana"]);
+                    CM_DatosKPI_PDF.Fe_DocOriginal = Convert.ToDateTime(dt.Rows[0]["Fe_DocOriginal"]);
+                    CM_DatosKPI_PDF.Fe_Oficializacion = Convert.ToDateTime(dt.Rows[0]["Fe_Oficializacion"]);
+                    CM_DatosKPI_PDF.Fe_RetiroCarga = Convert.ToDateTime(dt.Rows[0]["Fe_RetiroCarga"]);
+                    CM_DatosKPI_PDF.TotalDiasHabiles = Convert.ToInt32(dt.Rows[0]["TotalDiasHabiles"]);
+                    CM_DatosKPI_PDF.Resultado = dt.Rows[0]["Resultado"].ToString();
+                    CM_DatosKPI_PDF.TipoDesvio = dt.Rows[0]["TipoDesvio"].ToString();
+                    CM_DatosKPI_PDF.MotivoDesvio = dt.Rows[0]["MotivoDesvio"].ToString();
+                    CM_DatosKPI_PDF.DepositoGiro = dt.Rows[0]["Deposito"].ToString();
+
+                }
+                else
+                {
+                    throw new Exception("No se puede recuperar los datos del KPI, compruebe que se encuentre efectuado.");
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+        public bool ConsultarKPI() 
+        {
+            bool resultado = false;
+            try
+            {
+                DataTable dt = new DataTable();
+                string sSql = "SP_ConsultarKPI";
+                SqlParameter param_Interno = new SqlParameter("@Interno", SqlDbType.NVarChar, 200);
+                param_Interno.Value = Interno;
+
+                List<SqlParameter> listaParametros = new List<SqlParameter>();
+                listaParametros.Add(param_Interno);
+                lista = listaParametros.ToArray();
+
+                dt = ejecutar(sSql, lista, true);
+                if (dt.Rows.Count>0)
+                {
+                    resultado = true;
+                }
+                else
+                {
+                    resultado=false; 
+                }
+            }
+            catch (Exception) { }
+            return resultado;
+        }
+        private void cargarCM_DatosBDD(DataTable dt)
+        {
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    CM_DatosOperacionesKPIFinal Datos = new CM_DatosOperacionesKPIFinal
+                    {
+                        ID_KPI = Convert.ToInt32(dr["ID_KPI"]),
+
+                        Fe_KPI = Convert.ToDateTime(dr["Fe_KPI"]),
+                        Cliente = dr["Cliente"].ToString(),
+                        Interno = dr["Interno"].ToString(),
+                        Via = dr["Via"].ToString(),
+                        Canal = dr["Canal"].ToString(),
+                        N_Despacho = dr["N_Despacho"].ToString(),
+
+                        Fe_Arribo = Convert.ToDateTime(dr["Fe_Arribo"]),
+                        Fe_CierreIngreso = string.IsNullOrWhiteSpace(dr["Fe_CierreIngreso"].ToString())
+                        ? (DateTime?)null : Convert.ToDateTime(dr["Fe_CierreIngreso"]),
+
+                        Fe_FondosAduana = string.IsNullOrWhiteSpace(dr["Fe_FondosAduana"].ToString())
+                        ? (DateTime?)null : Convert.ToDateTime(dr["Fe_FondosAduana"]),
+
+                        Fe_DocOriginal = Convert.ToDateTime(dr["Fe_DocOriginal"]),
+                        Fe_Oficializacion = Convert.ToDateTime(dr["Fe_Oficializacion"]),
+                        Fe_RetiroCarga = Convert.ToDateTime(dr["Fe_RetiroCarga"]),
+
+                        TotalDiasHabiles = Convert.ToInt32(dr["TotalDiasHabiles"]),
+                        Resultado = dr["Resultado"].ToString(),
+                        TipoDesvio = dr["TipoDesvio"].ToString(),
+                        MotivoDesvio = dr["MotivoDesvio"].ToString(),
+                        DepositoGiro = dr["Deposito"].ToString(),
+                    };
+
+                    DatosBDD.Add(Datos);
+                }
+
+            }
+        }
+        private void cargarIndKPI(DataTable dt)
+        {
+            foreach (DataRow dr in dt.Rows)
+            {
+                CM_IndicadoresKPI kpi = new CM_IndicadoresKPI
+                {
+                    Via = dr["Via"].ToString(),
+                    NoSatisfactorio = Convert.ToInt32(dr["NoSatisfactorio"]),
+                    Requerido = Convert.ToInt32(dr["Requerido"]),
+                    Excelente = Convert.ToInt32(dr["Excelente"]),
+                };
+                IndKPI.Add(kpi);
             }
         }
 

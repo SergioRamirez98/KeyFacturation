@@ -98,3 +98,8 @@ D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\Newtonsoft.Json.xml
 D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\System.ValueTuple.xml
+D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\BouncyCastle.Cryptography.dll
+D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\itextsharp.dll
+D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\itextsharp.xmlworker.dll
+D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\BouncyCastle.Cryptography.xml
+D:\Users\ramir\source\repos\KeyFacturation\Datos\bin\Debug\itextsharp.xml

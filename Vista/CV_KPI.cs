@@ -34,23 +34,27 @@ namespace Vista
         {
             configurarComboBox();
             configurarTabla();
+            CServ_CrearPDF.CrearImagenIndicadores(TLP_Indicadores);
         }
         private void Btn_Generar_Click(object sender, EventArgs e)
         {
             try
             {
+                
                 pasarDatos(2);
-                KPI.GuardarEnBDD();
-                generarPDF();
+                if (!KPI.BuscarKPI())
+                {
+                    KPI.GuardarEnBDD();
+                    generarPDF();
+                    CServ_MsjUsuario.Exito("KPI generado con éxito");
+                    Btn_Refresh_Click(sender, e);
+                }
+                else { CServ_MsjUsuario.MensajesDeError("El KPI para la operación indicada ya existe."); }
             }
             catch (Exception ex)
             {
                 CServ_MsjUsuario.MensajesDeError(ex.Message);                
             }
-        }
-        private void cargarControles() 
-        {
-            Txb_FechaKpi.Text = DateTime.Today.ToString("dd/MM/yyyy"); 
         }
         private void Btn_Buscar_Click(object sender, EventArgs e)
         {
@@ -58,9 +62,91 @@ namespace Vista
             CServ_Limpiar.LimpiarPanelBox(Pnl_ResultadoKPI);
             cargarControles();
             CV_ListaOperaciones Listado = new CV_ListaOperaciones();
-            Listado.OperacionSeleccionada +=seleccionOperacion;
+            Listado.OperacionSeleccionada += seleccionOperacion;
             Listado.ShowDialog();
             calcularKPI();
+        }
+        private void Mtxb_RetiroCarga_TextChanged(object sender, EventArgs e)
+        {
+            if (Mtxb_RetiroCarga.MaskCompleted && Mtxb_Arribo.MaskCompleted)
+            {
+                calcularKPI();
+            }
+        }
+        private void Txb_DiasHabiles_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Txb_DiasHabiles.Text))
+            {
+                try
+                {
+                    diasHabiles = Convert.ToInt32(Txb_DiasHabiles.Text);
+
+
+                    switch (Cmb_Via.Text)
+                    {
+                        case "MARÍTIMO":
+                            if (diasHabiles < 5) { Cmb_Resultado.SelectedIndex = 0; }
+                            else if (diasHabiles == 5) { Cmb_Resultado.SelectedIndex = 1; }
+                            else { Cmb_Resultado.SelectedIndex = 2; }
+                            break;
+                        case "TERRESTRE":
+                            if (diasHabiles < 2) { Cmb_Resultado.SelectedIndex = 0; }
+                            else if (diasHabiles == 2) { Cmb_Resultado.SelectedIndex = 1; }
+                            else { Cmb_Resultado.SelectedIndex = 2; }
+                            break;
+                        case "AEREO":
+                            if (diasHabiles < 3) { Cmb_Resultado.SelectedIndex = 0; }
+                            else if (diasHabiles == 3) { Cmb_Resultado.SelectedIndex = 1; }
+                            else { Cmb_Resultado.SelectedIndex = 2; }
+                            break;
+                        case "CARGA SUELTA":
+                            if (diasHabiles < 10) { Cmb_Resultado.SelectedIndex = 0; }
+                            else if (diasHabiles == 10) { Cmb_Resultado.SelectedIndex = 1; }
+                            else { Cmb_Resultado.SelectedIndex = 2; }
+                            break;
+                        case "IC06":
+                            if (diasHabiles < 3) { Cmb_Resultado.SelectedIndex = 0; }
+                            else if (diasHabiles == 3) { Cmb_Resultado.SelectedIndex = 1; }
+                            else { Cmb_Resultado.SelectedIndex = 2; }
+                            break;
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    throw new Exception("Por favor ingrese un valor numerico.");
+                }
+            }
+            else
+            {
+                Cmb_Resultado.SelectedIndex = -1;
+                Cmb_Desvio.SelectedIndex = -1;
+            }
+        }
+        private void Cmb_Resultado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Cmb_Resultado.SelectedIndex == 0 || Cmb_Resultado.SelectedIndex == 1)
+            {
+                Cmb_Desvio.SelectedIndex = 0;
+            }
+        }
+        private void Btn_Refresh_Click(object sender, EventArgs e)
+        {
+            CServ_Limpiar.LimpiarPanelBox(Pnl_DatosKPI);
+            CServ_Limpiar.LimpiarPanelBox(Pnl_ResultadoKPI);
+            CServ_Limpiar.LimpiarDatosKPI();
+            cargarControles();
+        }
+        private void Btn_Informe_Click(object sender, EventArgs e)
+        {
+            CV_Informes Informes = new CV_Informes();
+            Informes.Show();
+        }
+
+        private void cargarControles() 
+        {
+            Txb_FechaKpi.Text = DateTime.Today.ToString("dd/MM/yyyy"); 
         }
         private void seleccionOperacion(CM_DatosOperacionesExcel DatosKPI)
         {
@@ -97,15 +183,16 @@ namespace Vista
         private void configurarComboBox()
         {
             Cmb_Desvio.Items.Add("N/A");
-            Cmb_Desvio.Items.Add("Interno");
-            Cmb_Desvio.Items.Add("Externo");
-            Cmb_Resultado.Items.Add("Excelente");
-            Cmb_Resultado.Items.Add("Requerido");
-            Cmb_Resultado.Items.Add("No satisfactorio");
-            Cmb_Via.Items.Add("Marítimo");
-            Cmb_Via.Items.Add("Aereo");
-            Cmb_Via.Items.Add("Terrestre");
-            Cmb_Via.Items.Add("Carga suelta");
+            Cmb_Desvio.Items.Add("INTERNO");
+            Cmb_Desvio.Items.Add("EXTERNO");
+            Cmb_Desvio.Items.Add("INTERNO& EXTERNO");
+            Cmb_Resultado.Items.Add("EXCELENTE");
+            Cmb_Resultado.Items.Add("REQUERIDO");
+            Cmb_Resultado.Items.Add("NO SATISFACTORIO");
+            Cmb_Via.Items.Add("MARÍTIMO");
+            Cmb_Via.Items.Add("AEREO");
+            Cmb_Via.Items.Add("TERRESTRE");
+            Cmb_Via.Items.Add("CARGA SUELTA");
             Cmb_Via.Items.Add("IC06");
         }
         private void configurarTabla()
@@ -220,91 +307,12 @@ namespace Vista
                     break;
             }
         }
-
         private void generarPDF() 
         {
-
+            KPI.ObtenerDatosPDF();
+            CServ_CrearPDF.ImgOapce = Properties.Resources.LogoOapce;
+            CServ_CrearPDF.ImgSedex = Properties.Resources.LogoSedex;
+            CServ_CrearPDF.GenerarPDF(1);
         }
-
-        private void Mtxb_RetiroCarga_TextChanged(object sender, EventArgs e)
-        {
-            if (Mtxb_RetiroCarga.MaskCompleted && Mtxb_Arribo.MaskCompleted)
-            { 
-                calcularKPI();
-            }
-        }
-
-        private void Txb_DiasHabiles_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(Txb_DiasHabiles.Text))
-            {
-                try
-                {
-                    diasHabiles = Convert.ToInt32(Txb_DiasHabiles.Text);
-
-
-                    switch (Cmb_Via.Text)
-                    {
-                        case "Marítimo":
-                            if (diasHabiles < 5) { Cmb_Resultado.SelectedIndex = 0; }
-                            else if (diasHabiles == 5) { Cmb_Resultado.SelectedIndex = 1; }
-                            else { Cmb_Resultado.SelectedIndex = 2; }
-                            break;
-                        case "Terrestre":
-                            if (diasHabiles < 2) { Cmb_Resultado.SelectedIndex = 0; }
-                            else if (diasHabiles == 2) { Cmb_Resultado.SelectedIndex = 1; }
-                            else { Cmb_Resultado.SelectedIndex = 2; }
-                            break;
-                        case "Aereo":
-                            if (diasHabiles < 3) { Cmb_Resultado.SelectedIndex = 0; }
-                            else if (diasHabiles == 3) { Cmb_Resultado.SelectedIndex = 1; }
-                            else { Cmb_Resultado.SelectedIndex = 2; }
-                            break;
-                        case "Carga suelta":
-                            if (diasHabiles < 10) { Cmb_Resultado.SelectedIndex = 0; }
-                            else if (diasHabiles == 10) { Cmb_Resultado.SelectedIndex = 1; }
-                            else { Cmb_Resultado.SelectedIndex = 2; }
-                            break;
-                        case "IC06":
-                            if (diasHabiles < 3) { Cmb_Resultado.SelectedIndex = 0; }
-                            else if (diasHabiles == 3) { Cmb_Resultado.SelectedIndex = 1; }
-                            else { Cmb_Resultado.SelectedIndex = 2; }
-                            break;
-                    }
-
-                }
-                catch (Exception)
-                {
-
-                    throw new Exception("Por favor ingrese un valor numerico.");
-                }
-            }
-            else
-            {
-                Cmb_Resultado.SelectedIndex = -1;
-                Cmb_Desvio.SelectedIndex = -1;
-            }
-        }
-
-        private void Cmb_Resultado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Cmb_Resultado.SelectedIndex==0|| Cmb_Resultado.SelectedIndex == 1) 
-            {
-                Cmb_Desvio.SelectedIndex = 0;
-            }            
-        }
-
-        private void Btn_Refresh_Click(object sender, EventArgs e)
-        {
-            CServ_Limpiar.LimpiarPanelBox(Pnl_DatosKPI);
-            CServ_Limpiar.LimpiarPanelBox(Pnl_ResultadoKPI);
-            cargarControles();
-        }
-
-        private void Btn_Informe_Click(object sender, EventArgs e)
-        {
-            CV_Informes Informes = new CV_Informes();
-            Informes.Show();
-        }
-    }
+       }
 }

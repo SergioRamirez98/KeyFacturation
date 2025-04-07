@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plantilla KPI</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 25px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 10px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .header-table td {
+                border: 1px solid black;
+                text-align: center;
+                font-size: 15px;
+                padding: 5px;
+                font-weight: bold;
+            }
+
+        .info-table {
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+            .info-table td {
+                border: 1px solid black;
+                padding: 5px;
+                font-size: 11px;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+                .info-table td:first-child {
+                    width: 40%;
+                    white-space: nowrap;
+                }
+
+                .info-table td:last-child {
+                    width: 60%;
+                    word-wrap: break-word;
+                }
+
+        .spacer {
+            height: 15px;
+        }
+
+        .large-spacer {
+            height: 75px;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: underline;
+            position: relative;
+            left: 450%; /* Ajusta este valor según el ancho de la tabla */
+        }
+
+        .resultado {
+            background-color: @color; /*#007BFF;  Azul, podés cambiarlo por otro */
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table class="header-table">
+            <tr>
+                <td style="width: 30%;">@LogoOapce</td>
+                <td style="width: 40%;">INDICADORES DE OPERACIÓN DE IMPORTACIÓN</td>
+                <td style="width: 30%;">@LogoSedex</td>
+            </tr>
+        </table>
+
+        <div class="large-spacer"></div>
+
+        <div class="title">Datos Generales</div>
+        <div class="spacer"></div>
+        <table class="info-table" align="center">
+            <tr><td>N° KPI</td><td>@ID_KPI</td></tr>
+            <tr><td>FECHA</td><td>@HoyFecha</td></tr>
+            <tr><td>CLIENTE</td><td>@Cliente</td></tr>
+            <tr><td>VÍA</td><td>@Via</td></tr>
+            <tr><td>CANAL</td><td>@Canal</td></tr>
+            <tr><td>DESPACHO</td><td>@Despacho</td></tr>
+            <tr><td>INGRESO DE MERCADERÍA</td><td>@IngresoMercaderia</td></tr>
+            <tr><td>CIERRE DE INGRESO A TERMINAL</td><td>@CierreIngreso</td></tr>
+            <tr><td>FONDOS ADUANA</td><td>@FondosAduana</td></tr>
+            <tr><td>DOCUMENTACIÓN ORIGINAL</td><td>@DocOriginal</td></tr>
+            <tr><td>OFICIALIZACIÓN</td><td>@Oficialización</td></tr>
+            <tr><td>RETIRO DE CARGA</td><td>@Retirocarga</td></tr>
+        </table>
+
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+
+        <div class="title">Información Adicional</div>
+        <div class="spacer"></div>
+        <table class="info-table" align="center">
+            <tr><td>TOTAL DE DÍAS HÁBILES</td><td>@TotalDiasHabiles</td></tr>
+            <tr><td>RESULTADO</td><td class="resultado">@Resultado</td></tr>
+        </table>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+
+
+        <div class="title">Indicadores</div>
+        <div class="spacer"></div>
+        <div style="text-align:center; margin: 10px 0;">
+            @Foto
+        </div>
+
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+
+        <div class="title">Detalles de Desvío</div>
+        <div class="spacer"></div>
+        <table class="info-table" align="center">
+            <tr><td>TIPO DESVÍO</td><td>@TipoDesvio</td></tr>
+            <tr><td>MOTIVO</td><td>@Motivo</td></tr>
+        </table>
+
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+
+        <div class="title">Aprobación</div>
+        <div class="spacer"></div>
+        <table class="info-table" align="center">
+            <tr>
+                <td style="text-align: center; font-weight: bold;">Aprobado por</td>
+                <td style="text-align: center;">@Usuario</td>
+                <td style="text-align: center; font-weight: bold;">Última revisión</td>
+                <td style="text-align: center;">@FechaUltimaRevision</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

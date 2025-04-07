@@ -33,72 +33,24 @@ namespace Vista
         {
             configurarDTGV();
             cargarDatosDTGV();
-        }
-        private void configurarDTGV() 
-        {
-             DTGV_ListaOperaciones.AllowUserToResizeColumns = false;
-             DTGV_ListaOperaciones.AllowUserToResizeRows = false;
-             DTGV_ListaOperaciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-             DTGV_ListaOperaciones.MultiSelect = false;
-             DTGV_ListaOperaciones.AllowUserToAddRows = false;
-             DTGV_ListaOperaciones.AllowUserToResizeColumns = false;
-             DTGV_ListaOperaciones.AllowUserToResizeRows = false;
-             DTGV_ListaOperaciones.ReadOnly = true;
-             DTGV_ListaOperaciones.RowHeadersVisible = false;
-             DTGV_ListaOperaciones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-        }
-        private void cargarDatosDTGV() 
-        {
-            ListaDatos.Clear();
-            ListaDatos = KPI.BuscarInterno();
-            DTGV_ListaOperaciones.DataSource = ListaDatos;
+            nombrarColumnas();
         }
 
         private void DTGV_ListaOperaciones_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
-
         private void DTGV_ListaOperaciones_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             seleccionarOperacion();
         }
-
-        private void DTGV_ListaOperaciones_KeyDown(object sender, KeyEventArgs e)
-        {
-
-            if (DTGV_ListaOperaciones.SelectedRows.Count > 0) seleccionarOperacion();
-        }
-
-        private void seleccionarOperacion()
-        {
-            if (DTGV_ListaOperaciones.SelectedRows.Count > 0)
-            {
-                int Seleccion = DTGV_ListaOperaciones.CurrentRow.Index;
-
-                DatosKPI.Cliente = DTGV_ListaOperaciones.Rows[Seleccion].Cells[0].Value.ToString();
-                DatosKPI.Interno = DTGV_ListaOperaciones.Rows[Seleccion].Cells[1].Value.ToString();
-                DatosKPI.Destinacion = DTGV_ListaOperaciones.Rows[Seleccion].Cells[2].Value.ToString();
-                DatosKPI.Oficializacion = DTGV_ListaOperaciones.Rows[Seleccion].Cells[4].Value.ToString();
-                DatosKPI.FechaArribo = DTGV_ListaOperaciones.Rows[Seleccion].Cells[3].Value.ToString();
-                DatosKPI.Salida = DTGV_ListaOperaciones.Rows[Seleccion].Cells[5].Value.ToString();
-                DatosKPI.Fondos = DTGV_ListaOperaciones.Rows[Seleccion].Cells[6].Value.ToString();
-                DatosKPI.Giro = DTGV_ListaOperaciones.Rows[Seleccion].Cells[7].Value.ToString();
-                DatosKPI.Canal = DTGV_ListaOperaciones.Rows[Seleccion].Cells[8].Value.ToString();
-                OperacionSeleccionada(DatosKPI);
-
-                this.Close();
-            }
-        }
-
         private void Txb_BusquedaRapida_TextChanged(object sender, EventArgs e)
         {
 
-            if (!string.IsNullOrEmpty(Txb_BusquedaRapida.Text)) DTGV_ListaOperaciones.DataSource = KPI.filtrarOperaciones(Txb_BusquedaRapida.Text);
-            else { DTGV_ListaOperaciones.DataSource = KPI.BuscarInterno(); }
-            
-        }
+            if (!string.IsNullOrEmpty(Txb_BusquedaRapida.Text)) { DTGV_ListaOperaciones.DataSource = KPI.filtrarOperaciones(Txb_BusquedaRapida.Text); nombrarColumnas(); }
+            else { DTGV_ListaOperaciones.DataSource = KPI.BuscarInterno(); nombrarColumnas(); }
 
+        }
         private void DTGV_ListaOperaciones_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             switch (e.ColumnIndex)
@@ -131,6 +83,62 @@ namespace Vista
                     DTGV_ListaOperaciones.DataSource = KPI.OrdenarColumnas(8, ListaDatos);
                     break;
             }
+        }
+        private void DTGV_ListaOperaciones_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (DTGV_ListaOperaciones.SelectedRows.Count > 0) seleccionarOperacion();
+        }
+        private void seleccionarOperacion()
+        {
+            if (DTGV_ListaOperaciones.SelectedRows.Count > 0)
+            {
+                int Seleccion = DTGV_ListaOperaciones.CurrentRow.Index;
+
+                DatosKPI.Cliente = DTGV_ListaOperaciones.Rows[Seleccion].Cells[0].Value.ToString();
+                DatosKPI.Interno = DTGV_ListaOperaciones.Rows[Seleccion].Cells[1].Value.ToString();
+                DatosKPI.Destinacion = DTGV_ListaOperaciones.Rows[Seleccion].Cells[2].Value.ToString();
+                DatosKPI.Oficializacion = DTGV_ListaOperaciones.Rows[Seleccion].Cells[4].Value.ToString();
+                DatosKPI.FechaArribo = DTGV_ListaOperaciones.Rows[Seleccion].Cells[3].Value.ToString();
+                DatosKPI.Salida = DTGV_ListaOperaciones.Rows[Seleccion].Cells[5].Value.ToString();
+                DatosKPI.Fondos = DTGV_ListaOperaciones.Rows[Seleccion].Cells[6].Value.ToString();
+                DatosKPI.Giro = DTGV_ListaOperaciones.Rows[Seleccion].Cells[7].Value.ToString();
+                DatosKPI.Canal = DTGV_ListaOperaciones.Rows[Seleccion].Cells[8].Value.ToString();
+                OperacionSeleccionada(DatosKPI);
+
+                this.Close();
+            }
+        }
+        private void configurarDTGV()
+        {
+            DTGV_ListaOperaciones.AllowUserToResizeColumns = false;
+            DTGV_ListaOperaciones.AllowUserToResizeRows = false;
+            DTGV_ListaOperaciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            DTGV_ListaOperaciones.MultiSelect = false;
+            DTGV_ListaOperaciones.AllowUserToAddRows = false;
+            DTGV_ListaOperaciones.AllowUserToResizeColumns = false;
+            DTGV_ListaOperaciones.AllowUserToResizeRows = false;
+            DTGV_ListaOperaciones.ReadOnly = true;
+            DTGV_ListaOperaciones.RowHeadersVisible = false;
+            DTGV_ListaOperaciones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+        }
+        private void cargarDatosDTGV()
+        {
+            ListaDatos.Clear();
+            ListaDatos = KPI.BuscarInterno();
+            DTGV_ListaOperaciones.DataSource = ListaDatos;
+        }
+        private void nombrarColumnas()
+        {
+            DTGV_ListaOperaciones.Columns[0].HeaderText = "Cliente";
+            DTGV_ListaOperaciones.Columns[1].HeaderText = "Interno";
+            DTGV_ListaOperaciones.Columns[2].HeaderText = "Destinación";
+            DTGV_ListaOperaciones.Columns[3].HeaderText = "Arribo";
+            DTGV_ListaOperaciones.Columns[4].HeaderText = "Oficializarion";
+            DTGV_ListaOperaciones.Columns[5].HeaderText = "Retiro";
+            DTGV_ListaOperaciones.Columns[6].HeaderText = "Fondos";
+            DTGV_ListaOperaciones.Columns[7].HeaderText = "Depósito / Terminal";
+            DTGV_ListaOperaciones.Columns[8].HeaderText = "Canal";
         }
     }
 }

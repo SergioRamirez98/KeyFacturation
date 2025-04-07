@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modelo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,34 @@ namespace Servicios
                 {
                     ((DateTimePicker)control).Value = DateTime.Today;
                 }
+                if (control is MaskedTextBox)
+                {
+                    ((MaskedTextBox)control).Text= "  /  /   ";
+                }
             }
         }
+        public static void LimpiarDatosKPI() 
+        {
+            CM_DatosKPI_PDF.ID_KPI = 0;
+            CM_DatosKPI_PDF.Fe_KPI = DateTime.Today;
+            CM_DatosKPI_PDF.Cliente = null;
+            CM_DatosKPI_PDF.Interno = null;
+            CM_DatosKPI_PDF.Via = null;
+            CM_DatosKPI_PDF.Canal = null;
+            CM_DatosKPI_PDF.N_Despacho = null;
+
+            CM_DatosKPI_PDF.Fe_Arribo = DateTime.Today;
+            CM_DatosKPI_PDF.Fe_CierreIngreso = null;
+            CM_DatosKPI_PDF.Fe_FondosAduana = null;
+            CM_DatosKPI_PDF.Fe_DocOriginal= DateTime.Today;
+            CM_DatosKPI_PDF.Fe_Oficializacion  = DateTime.Today;
+            CM_DatosKPI_PDF.Fe_RetiroCarga  = DateTime.Today;
+
+            CM_DatosKPI_PDF.TotalDiasHabiles  = 0;
+            CM_DatosKPI_PDF.Resultado  = null;
+            CM_DatosKPI_PDF.TipoDesvio = null;
+            CM_DatosKPI_PDF.MotivoDesvio  = null;
+            CM_DatosKPI_PDF.DepositoGiro  = null;
+    }
     }
 }

@@ -92,3 +92,8 @@ D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\Newtonsoft.Json.xml
 D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\System.ValueTuple.xml
+D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\BouncyCastle.Cryptography.dll
+D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\itextsharp.dll
+D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\itextsharp.xmlworker.dll
+D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\BouncyCastle.Cryptography.xml
+D:\Users\ramir\source\repos\KeyFacturation\Modelo\bin\Debug\itextsharp.xml

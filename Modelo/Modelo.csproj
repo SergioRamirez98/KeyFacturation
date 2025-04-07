@@ -142,6 +142,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CM_DatosKPI_PDF.cs" />
     <Compile Include="CM_DatosOperacionesExcel.cs" />
     <Compile Include="CM_DatosOperacionesKPIFinal.cs" />
     <Compile Include="CM_IndicadoresKPI.cs" />

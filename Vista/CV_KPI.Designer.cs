@@ -142,7 +142,7 @@
             this.Btn_Buscar.Location = new System.Drawing.Point(296, 69);
             this.Btn_Buscar.Name = "Btn_Buscar";
             this.Btn_Buscar.Size = new System.Drawing.Size(28, 28);
-            this.Btn_Buscar.TabIndex = 3;
+            this.Btn_Buscar.TabIndex = 5;
             this.Btn_Buscar.UseVisualStyleBackColor = true;
             this.Btn_Buscar.Click += new System.EventHandler(this.Btn_Buscar_Click);
             // 
@@ -222,7 +222,7 @@
             this.Txb_Interno.Location = new System.Drawing.Point(139, 70);
             this.Txb_Interno.Name = "Txb_Interno";
             this.Txb_Interno.Size = new System.Drawing.Size(151, 20);
-            this.Txb_Interno.TabIndex = 6;
+            this.Txb_Interno.TabIndex = 4;
             this.Txb_Interno.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Txb_Cliente
@@ -230,15 +230,16 @@
             this.Txb_Cliente.Location = new System.Drawing.Point(139, 45);
             this.Txb_Cliente.Name = "Txb_Cliente";
             this.Txb_Cliente.Size = new System.Drawing.Size(151, 20);
-            this.Txb_Cliente.TabIndex = 5;
+            this.Txb_Cliente.TabIndex = 3;
             this.Txb_Cliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Txb_FechaKpi
             // 
+            this.Txb_FechaKpi.Enabled = false;
             this.Txb_FechaKpi.Location = new System.Drawing.Point(139, 20);
             this.Txb_FechaKpi.Name = "Txb_FechaKpi";
             this.Txb_FechaKpi.Size = new System.Drawing.Size(151, 20);
-            this.Txb_FechaKpi.TabIndex = 4;
+            this.Txb_FechaKpi.TabIndex = 2;
             this.Txb_FechaKpi.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Cmb_Via
@@ -381,7 +382,7 @@
             this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.16529F));
             this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.83471F));
             this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
+            this.TLP_Indicadores.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
             this.TLP_Indicadores.Location = new System.Drawing.Point(153, 15);
             this.TLP_Indicadores.Name = "TLP_Indicadores";
             this.TLP_Indicadores.RowCount = 6;
@@ -399,8 +400,8 @@
             this.Cmb_Resultado.FormattingEnabled = true;
             this.Cmb_Resultado.Location = new System.Drawing.Point(463, 147);
             this.Cmb_Resultado.Name = "Cmb_Resultado";
-            this.Cmb_Resultado.Size = new System.Drawing.Size(121, 21);
-            this.Cmb_Resultado.TabIndex = 21;
+            this.Cmb_Resultado.Size = new System.Drawing.Size(133, 21);
+            this.Cmb_Resultado.TabIndex = 18;
             this.Cmb_Resultado.SelectedIndexChanged += new System.EventHandler(this.Cmb_Resultado_SelectedIndexChanged);
             // 
             // Txb_Motivo
@@ -470,7 +471,7 @@
             this.Btn_Generar.Location = new System.Drawing.Point(339, 525);
             this.Btn_Generar.Name = "Btn_Generar";
             this.Btn_Generar.Size = new System.Drawing.Size(101, 29);
-            this.Btn_Generar.TabIndex = 2;
+            this.Btn_Generar.TabIndex = 21;
             this.Btn_Generar.Text = "Generar KPI";
             this.Btn_Generar.UseVisualStyleBackColor = true;
             this.Btn_Generar.Click += new System.EventHandler(this.Btn_Generar_Click);
@@ -480,7 +481,7 @@
             this.Btn_Informe.Location = new System.Drawing.Point(687, 525);
             this.Btn_Informe.Name = "Btn_Informe";
             this.Btn_Informe.Size = new System.Drawing.Size(101, 29);
-            this.Btn_Informe.TabIndex = 3;
+            this.Btn_Informe.TabIndex = 22;
             this.Btn_Informe.Text = "Informe KPI";
             this.Btn_Informe.UseVisualStyleBackColor = true;
             this.Btn_Informe.Click += new System.EventHandler(this.Btn_Informe_Click);

@@ -27,6 +27,7 @@ namespace Logica
         public DateTime FeSalida { get; set; }
         public List<CM_IndicadoresKPI> IndKPI { get; set; } = new List<CM_IndicadoresKPI>();
 
+        public int ID_KPI { get; set; }
         public string Fe_KPI { get; set; }
         public string Cliente { get; set; }
         public string Interno { get; set; }
@@ -131,10 +132,23 @@ namespace Logica
             pasarDatos(1);
             return Calendario.CalcularDiasHabiles();
         }
-        public void GuardarEnBDD() 
+        public bool BuscarKPI()
         {
+            bool resultado=false;
             pasarDatos(2);
-            KPI.InsertarEnBDD();
+            validarDatos();
+            resultado = KPI.ConsultarKPI();
+            return resultado;
+        }
+        public void GuardarEnBDD() 
+        {            
+            pasarDatos(2);
+            validarDatos();
+            ID_KPI= KPI.InsertarEnBDD();
+        }
+        public void ObtenerDatosPDF() 
+        {
+            KPI.ObtenerKPI(ID_KPI);
         }
         private void convertirDatos(List<CM_DatosOperacionesExcel> DatosOperaciones) 
         {
@@ -180,6 +194,37 @@ namespace Logica
                 throw new Exception("las fechas de salida no puede ser anterior a la fecha de ingreso.");
             }
         }
+        private void validarDatos()
+        {
+            try
+            {
+                var validarFechas = new List<(string Nombre, DateTime? Fecha)>
+                {
+                ("Ingreso de mercadería", KPI.Fe_Arribo),
+                ("Cierre de ingreso a Terminal", KPI.Fe_CID),
+                ("Fondos Aduana", KPI.Fe_Fondos),
+                ("Oficialización", KPI.Fe_Ofic),
+                ("Documentación original", KPI.Fe_DocOriginal)
+                };
+                foreach (var fecha in validarFechas)
+                {
+                    if (fecha.Fecha > KPI.Fe_RetiroCarga)
+                    {
+                        throw new Exception($"La fecha de \"{fecha.Nombre}\" no puede ser posterior a la fecha de retiro de carga.");
+                    }
+                }
+                if (KPI.Resultado=="NO SATISFACTORIO" && KPI.TipoDesvio=="N/A")
+                {
+                    throw new Exception("El resultado no fue satisfactorio, debe indicar el tipo de desvío");
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         private void pasarDatos(int valor) 
         {
             switch (valor)
@@ -188,7 +233,7 @@ namespace Logica
                     Calendario.FeIngreso = FeIngreso;
                     Calendario.FeSalida = FeSalida;
                     break;
-                    case 2:
+                case 2:
                     try
                     {
                         var datosRequeridos = new List<object> { Cliente, Interno, Via, Canal, Despacho, Giro, TotDiasHabiles, Resultado, TipoDesvio};
@@ -208,8 +253,17 @@ namespace Logica
                             KPI.Canal = Canal;
                             KPI.Despacho = Despacho;
                             KPI.Giro = Giro;
-                            if (Fe_CID != "  /  /") KPI.Fe_CID = Convert.ToDateTime(Fe_CID);
-                            if (Fe_Fondos != "  /  /") KPI.Fe_Fondos = Convert.ToDateTime(Fe_Fondos);
+                            if (Fe_CID != "  /  /") 
+                            { 
+                                KPI.Fe_CID = Convert.ToDateTime(Fe_CID);
+                            }
+
+                            if (Fe_Fondos != "  /  /") 
+                            {
+                                KPI.Fe_Fondos = Convert.ToDateTime(Fe_Fondos); 
+                            }
+
+
                             if (Fe_Arribo != "  /  /" && Fe_Ofic != "  /  /" && Fe_DocOriginal != "  /  /" && Fe_RetiroCarga != "  /  /")
                             {
                                 KPI.Fe_Arribo = Convert.ToDateTime(Fe_Arribo);
@@ -220,7 +274,7 @@ namespace Logica
                             }
                             else { throw new Exception("Las fechas de arribo, oficializacion, documentación original y retiro de carga no pueden estar vacias."); }
                             KPI.TotDiasHabiles = Convert.ToInt32(TotDiasHabiles);
-                            KPI.Resultado = (Resultado);
+                            KPI.Resultado = Resultado;
                             KPI.TipoDesvio = TipoDesvio;
                             KPI.Motivo = Motivo;
                         }
@@ -230,7 +284,7 @@ namespace Logica
 
                         throw;
                     }
-                    break;
+                    break;               
             }
         }
         public List<CM_DatosOperacionesExcel> filtrarOperaciones(string Dato) 
@@ -254,6 +308,42 @@ namespace Logica
                         dato.Canal.IndexOf(Dato, StringComparison.OrdinalIgnoreCase) >= 0
                         
                         ).ToList();
+            }
+
+            return DatosFiltrados;
+        }
+
+        public List<CM_DatosOperacionesKPIFinal> FiltrarKpis(string Datos) 
+        {
+            List<CM_DatosOperacionesKPIFinal> DatosFiltrados = new List<CM_DatosOperacionesKPIFinal>();
+            DatosFiltrados = DatosBDD;
+            if (!string.IsNullOrEmpty(Datos))
+            {
+
+                DatosFiltrados = DatosFiltrados.Where
+                (dato =>
+                dato.ID_KPI.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Fe_KPI.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Cliente.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Interno.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Via.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Canal.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.N_Despacho.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+
+                dato.Fe_Arribo.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Fe_CierreIngreso.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Fe_FondosAduana.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Fe_DocOriginal.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Fe_Oficializacion.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Fe_RetiroCarga.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.TotalDiasHabiles.ToString().IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.Resultado.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.TipoDesvio.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.MotivoDesvio.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                dato.DepositoGiro.IndexOf(Datos, StringComparison.OrdinalIgnoreCase) >= 0
+
+
+                ).ToList();
             }
 
             return DatosFiltrados;

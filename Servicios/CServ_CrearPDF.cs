@@ -12,6 +12,7 @@ using iTextSharp.text.pdf;
 using iTextSharp.text;
 using iTextSharp.tool.xml;
 using System.Xml.Linq;
+using Modelo;
 
 namespace Servicios
 {
@@ -19,21 +20,22 @@ namespace Servicios
     {
 
         #region Properties PDF
-        public static System.Drawing.Image ImgFarmacia { get; set; }
-        public static System.Drawing.Image ImgFarmatic { get; set; }
+        public static System.Drawing.Image ImgOapce { get; set; }
+        public static System.Drawing.Image ImgSedex { get; set; }
+        public static System.Drawing.Image ImgPanelDatos { get; set; }
         public static string RutaArchivo { get; set; }
         public static string PDFhtml { get; set; }
         public static string carpetaEspecifica { get; set; }
         public static string nombreArchivo { get; set; }
+        public static string carpetaDocumentos { get; set; }
+        public static string carpetaBase { get; set; }
+
+
         #endregion
+
         #region PropertiesKPI
         public static int ID_Pedido { get; set; }
         public static int OC { get; set; }
-
-        //public static List<CM_OrdenDeCompraPorItemsPDF> ListadeItems = new List<CM_OrdenDeCompraPorItemsPDF>();
-        //public static List<CM_PedidosdeCompra> ListadeItemsPC = new List<CM_PedidosdeCompra>();
-
-        //public static List<CM_Catalogo> CATALOGO = new List<CM_Catalogo>();
         #endregion
 
         #region PropertiesLiquidacion
@@ -45,41 +47,80 @@ namespace Servicios
         public static double SubtotalAcumulado { get; set; }
         public static double DescuentoAcumulado { get; set; }
         public static DateTime Fecha { get; set; }
-        //public static List<CM_DatosVenta> ItemsVendidos = new List<CM_DatosVenta>();
+        // public static List<CM_DatosVenta> ItemsVendidos = new List<CM_DatosVenta>();
         #endregion
 
-        public static void GenerarPDF(int valor)
+        public static bool AbrirPDFExistente(int valor)
         {
+            bool resultado = false;
             try
             {
                 SaveFileDialog guardar = new SaveFileDialog();
                 string carpetaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-                string carpetaBase = Path.Combine(carpetaDocumentos, "Farmatic");
+                string carpetaBase = Path.Combine(carpetaDocumentos, "KeyFacturation");
+
 
                 if (!Directory.Exists(carpetaBase))
                 {
                     Directory.CreateDirectory(carpetaBase);
                 }
-                carpetaEspecifica = "";
-                nombreArchivo = "";
+                switch (valor)
+                {
+                    case 1:
+                        carpetaEspecifica = Path.Combine(carpetaBase, "KPI"); 
+                        nombreArchivo = ("KPI " + CM_DatosKPI_PDF.Interno+ ".pdf");
+                        if (File.Exists(nombreArchivo))
+                        {
+                            Process.Start(new ProcessStartInfo(carpetaEspecifica + "\\" + nombreArchivo) { UseShellExecute = true });
+                            resultado = true;
+                        }
+                        else { resultado =false ; }
+                        break;
+                    case 2:
+                        resultado = false;
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return resultado;
+           
+        }
+        public static void GenerarPDF(int valor)
+        {
+            try
+            {
+                SaveFileDialog guardar = new SaveFileDialog();
+                carpetaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                carpetaBase = Path.Combine(carpetaDocumentos, "KeyFacturation");
+
+
+                if (!Directory.Exists(carpetaBase))
+                {
+                    Directory.CreateDirectory(carpetaBase);
+                }
+
 
                 switch (valor)
                 {
                     case 1:
-                        carpetaEspecifica = Path.Combine(carpetaBase, "OrdenesDeCompra");
-                        nombreArchivo = "OC N° " + OC.ToString() + ".pdf";
+                        carpetaEspecifica = Path.Combine(carpetaBase, "KPI"); ;
+                        nombreArchivo = ("KPI " + CM_DatosKPI_PDF.Interno + ".pdf");
                         RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Plantilla.html");
                         break;
                     case 2:
-                        carpetaEspecifica = Path.Combine(carpetaBase, "Remitos");
-                        nombreArchivo = "Remito de recepción de OC N° " + OC.ToString() + ".pdf";
-                        RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Plantilla.html");
+                        carpetaEspecifica = Path.Combine(carpetaBase, "PreFacturación");
+                        nombreArchivo = "Liquidación N° " + OC.ToString() + ".pdf";
+                        RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "PlantillaPreliquidar.html");
                         break;
                     case 3:
-                        carpetaEspecifica = Path.Combine(carpetaBase, "Ventas");
+                        carpetaEspecifica = Path.Combine(carpetaBase, "KPI");
                         nombreArchivo = "Venta N° " + ID_Venta.ToString() + ".pdf";
-                        RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "PlantillaParaVentas.html");
                         break;
                     case 4:
                         carpetaEspecifica = Path.Combine(carpetaBase, "Pedidos de Compra");
@@ -106,18 +147,6 @@ namespace Servicios
                         Document pdfDoc = new Document(PageSize.A4, 55, 75, 25, 25);
                         PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
                         pdfDoc.Open();
-                        iTextSharp.text.Image FarmaLogo = iTextSharp.text.Image.GetInstance(ImgFarmacia, System.Drawing.Imaging.ImageFormat.Png);
-                        iTextSharp.text.Image FarmaTIClogo = iTextSharp.text.Image.GetInstance(ImgFarmatic, System.Drawing.Imaging.ImageFormat.Png);
-                        FarmaLogo.ScaleToFit(80, 60);
-                        FarmaLogo.Alignment = iTextSharp.text.Image.UNDERLYING;
-                        FarmaLogo.SetAbsolutePosition(pdfDoc.LeftMargin, pdfDoc.Top - 60);
-
-                        FarmaTIClogo.ScaleToFit(80, 60);
-                        FarmaTIClogo.Alignment = iTextSharp.text.Image.UNDERLYING;
-                        FarmaTIClogo.SetAbsolutePosition(PageSize.A4.Width - pdfDoc.RightMargin - 30, pdfDoc.Top - 60);
-
-                        pdfDoc.Add(FarmaTIClogo);
-                        pdfDoc.Add(FarmaLogo);
 
                         using (StringReader sr = new StringReader(PDFhtml))
                         {
@@ -126,19 +155,108 @@ namespace Servicios
                         pdfDoc.Close();
                         stream.Close();
                     }
+                    Process.Start(guardar.FileName);
                 }
-                Process.Start(guardar.FileName);
             }
             catch (Exception)
             {
 
-                throw new Exception("La compra se ha realizado con éxito pero no se ha podido generar el PDF. Por favor, contáctes con el proveedor del sistema");
+                throw new Exception("La operación se ha realizado con éxito pero no se ha podido generar el PDF. Por favor, contáctes con el proveedor del sistema");
             }
         }
         private static string CargarDatosPDF(string PDFhtml, int valor)
         {
-           /* string FilaProductos = "";
-            double TotalOC = 0;
+
+
+            System.Drawing.Image resizedOapce = ResizeImage(ImgOapce, 100, 50); // le paso las medidas necesarias
+            System.Drawing.Image resizedSedex = ResizeImage(ImgSedex, 50, 50);
+
+
+            // Guardar las imágenes redimensionadas en archivos temporales
+            string oapceImagePath = Path.Combine(Path.GetTempPath(), "oapceImage.png");
+            string sedexImagePath = Path.Combine(Path.GetTempPath(), "sedexImage.png");
+
+            resizedOapce.Save(oapceImagePath, System.Drawing.Imaging.ImageFormat.Png);
+            resizedSedex.Save(sedexImagePath, System.Drawing.Imaging.ImageFormat.Png);
+
+            // Reemplazar @OC y @NUMERO con etiquetas <img> que usan rutas de archivo
+            PDFhtml = PDFhtml.Replace("@LogoOapce", $"<img src=\"{oapceImagePath}\" style=\"max-width: 100px; max-height: 50px;\"/>");
+            PDFhtml = PDFhtml.Replace("@LogoSedex", $"<img src=\"{sedexImagePath}\" style=\"max-width: 100px; max-height: 50px;\"/>");
+
+
+
+            if (ImgPanelDatos != null)
+            {
+
+
+                // Opcional: redimensionar si querés que no sea tan grande en el PDF
+                System.Drawing.Image resizedPanelDatos = ResizeImage(ImgPanelDatos, 395, 95); // ajustá según tu layout
+
+                string panelDatosImagePath = Path.Combine(Path.GetTempPath(), "panelDatosImage.png");
+                resizedPanelDatos.Save(panelDatosImagePath, System.Drawing.Imaging.ImageFormat.Png);
+                PDFhtml = PDFhtml.Replace("@Foto", $"<img src=\"{panelDatosImagePath}\"/>");
+
+            }
+            else
+            {
+                PDFhtml = PDFhtml.Replace("@Foto", "<i>No hay imagen de indicadores disponible</i>");
+            }
+
+            PDFhtml = PDFhtml.Replace("@ID_KPI", CM_DatosKPI_PDF.ID_KPI.ToString());
+            PDFhtml = PDFhtml.Replace("@HoyFecha", CM_DatosKPI_PDF.Fe_KPI.ToString("d"));
+            PDFhtml = PDFhtml.Replace("@Cliente", CM_DatosKPI_PDF.Cliente);
+            PDFhtml = PDFhtml.Replace("@Via", CM_DatosKPI_PDF.Via);
+            PDFhtml = PDFhtml.Replace("@Canal", CM_DatosKPI_PDF.Canal);
+            PDFhtml = PDFhtml.Replace("@Despacho", CM_DatosKPI_PDF.N_Despacho);
+            PDFhtml = PDFhtml.Replace("@IngresoMercaderia", CM_DatosKPI_PDF.Fe_Arribo.ToString("d"));
+
+         
+            if (CM_DatosKPI_PDF.Fe_CierreIngreso.HasValue)
+            {
+                PDFhtml = PDFhtml.Replace("@CierreIngreso", CM_DatosKPI_PDF.Fe_CierreIngreso.Value.ToString("d"));
+            }
+            else
+            {
+                PDFhtml = PDFhtml.Replace("@CierreIngreso", "-");
+            }
+
+            if (CM_DatosKPI_PDF.Fe_FondosAduana.HasValue)
+            {
+                PDFhtml = PDFhtml.Replace("@FondosAduana", CM_DatosKPI_PDF.Fe_FondosAduana.Value.ToString("d"));
+            }
+            else
+            {
+                PDFhtml = PDFhtml.Replace("@FondosAduana", "-");
+            }
+
+            PDFhtml = PDFhtml.Replace("@DocOriginal", CM_DatosKPI_PDF.Fe_DocOriginal.ToString("d"));
+            PDFhtml = PDFhtml.Replace("@Oficialización", CM_DatosKPI_PDF.Fe_Oficializacion.ToString("d"));
+            PDFhtml = PDFhtml.Replace("@Retirocarga", CM_DatosKPI_PDF.Fe_RetiroCarga.ToString("d"));
+            PDFhtml = PDFhtml.Replace("@TotalDiasHabiles", CM_DatosKPI_PDF.TotalDiasHabiles.ToString("d"));
+
+            PDFhtml = PDFhtml.Replace("@Resultado", CM_DatosKPI_PDF.Resultado);
+
+            string colorResultado = "#000"; // Valor por defecto (negro)
+            string valorResultado = CM_DatosKPI_PDF.Resultado.ToLower();
+
+            if (valorResultado.Contains("excelente"))
+                colorResultado = "#007BFF"; // Celeste
+            else if (valorResultado.Contains("requerido"))
+                //colorResultado = "#28a745"; // Verde
+            colorResultado = "#1A6F2E"; // Verde
+            
+            else if (valorResultado.Contains("no satisfactorio"))
+             //   colorResultado = "#dc3545"; // Rojo
+            colorResultado = "#C90000"; // Rojo
+
+            PDFhtml = PDFhtml.Replace("@color", colorResultado);
+
+
+
+            PDFhtml = PDFhtml.Replace("@TipoDesvio", CM_DatosKPI_PDF.TipoDesvio);
+            PDFhtml = PDFhtml.Replace("@Motivo", CM_DatosKPI_PDF.MotivoDesvio);          
+
+            /*
             switch (valor)
             {
                 case 1:
@@ -224,8 +342,8 @@ namespace Servicios
                         double preciosugerido = consultaRepetido(producto.NombreComercial, producto.PrecioUnitario);
 
                         FilaProductos += "<td>" + producto.PrecioUnitario.ToString("#,##0.00") + "</td>";
-                        //  double PrecioConProffit = 0;
-                        //  PrecioConProffit = producto.PrecioUnitario * 1.30;
+                          double PrecioConProffit = 0;
+                          PrecioConProffit = producto.PrecioUnitario * 1.30;
                         FilaProductos += "<td>" + preciosugerido.ToString("#,##0.00") + "</td>";
                         FilaProductos += "</tr>";
                         TotalOC += producto.Subtotal;
@@ -240,100 +358,62 @@ namespace Servicios
                     CM_DatosOCDefinitiva.LimpiarDatos(true);
                     ID_Pedido = 0;
                     break;
-                case 3:
-
-                    if (string.IsNullOrEmpty(NombreCliente))
-                    {
-                        NombreCliente = "Cliente no registrado";
-                        Descuento = 0;
-                        CategoriaCliente = "Sin categoria, no aplica descuento";
-                    }
-
-                    PDFhtml = PDFhtml.Replace("@NUMERO", ID_Venta.ToString());
-                    PDFhtml = PDFhtml.Replace("@NombreCliente", NombreCliente);
-                    PDFhtml = PDFhtml.Replace("@DescuentoCliente", Descuento.ToString() + "%");
-                    PDFhtml = PDFhtml.Replace("@Categoria", CategoriaCliente);
-
-
-
-                    foreach (var producto in ItemsVendidos)
-                    {
-                        FilaProductos += "<tr>";
-                        FilaProductos += "<td>" + producto.NombreProducto + "</td>";
-                        FilaProductos += "<td>" + producto.Monodroga + "</td>";
-                        FilaProductos += "<td>" + producto.Marca + "</td>";
-                        FilaProductos += "<td>" + producto.Cantidad.ToString() + "</td>";
-                        FilaProductos += "<td>" + producto.PrecUnit.ToString("#,##0.00") + "</td>";
-                        FilaProductos += "<td>" + producto.Subtotal.ToString("#,##0.00") + "</td>";
-                        FilaProductos += "</tr>";
-                        TotalOC += producto.Subtotal;
-                    }
-                    DescuentoAcumulado = TotalOC * (Descuento / 100);
-
-                    PDFhtml = PDFhtml.Replace("@Items", FilaProductos);
-                    PDFhtml = PDFhtml.Replace("@SubAcumulado", TotalOC.ToString("#,##0.00"));
-                    PDFhtml = PDFhtml.Replace("@Desc", "-" + DescuentoAcumulado.ToString("#,##0.00"));
-                    PDFhtml = PDFhtml.Replace("@Total", (TotalOC - DescuentoAcumulado).ToString("#,##0.00"));
-
-                    PDFhtml = PDFhtml.Replace("@Usuario", UsuarioVendedor);
-                    PDFhtml = PDFhtml.Replace("@AutoFecha", Fecha.ToString());
-                    CM_DatosOCDefinitiva.LimpiarDatos(true);
-                    ItemsVendidos.Clear();
-                    ID_Venta = 0;
-                    NombreCliente = null;
-                    Descuento = 0;
-                    CategoriaCliente = null;
-                    break;
-                case 4:
-                    PDFhtml = PDFhtml.Replace("@OC", "Pedido de Compra");
-                    PDFhtml = PDFhtml.Replace("@NUMERO", OC.ToString());
-
-                    PDFhtml = PDFhtml.Replace("@Proveedor", CM_DatosOCDefinitiva.NombreProveedor);
-                    PDFhtml = PDFhtml.Replace("@PC", OC.ToString());
-                    PDFhtml = PDFhtml.Replace("@Fecha", CM_DatosOCDefinitiva.Fecha.ToString("d"));
-                    PDFhtml = PDFhtml.Replace("@MatriculaProveedor", CM_DatosOCDefinitiva.MatriculaProveedor.ToString());
-                    PDFhtml = PDFhtml.Replace("@CUITProveedor", CM_DatosOCDefinitiva.CUITProveedor);
-                    PDFhtml = PDFhtml.Replace("@DireccionProv", CM_DatosOCDefinitiva.DireccionProv);
-                    PDFhtml = PDFhtml.Replace("@CorreoProv", CM_DatosOCDefinitiva.CorreoProv);
-                    PDFhtml = PDFhtml.Replace("@LocalidadProv", CM_DatosOCDefinitiva.LocalidadProv);
-                    PDFhtml = PDFhtml.Replace("@PartidoProv", CM_DatosOCDefinitiva.PartidoProv);
-                    PDFhtml = PDFhtml.Replace("@TelefonoProv", CM_DatosOCDefinitiva.TelefonoProv.ToString());
-
-                    PDFhtml = PDFhtml.Replace("@NombreEmpresa", CM_DatosOCDefinitiva.NombreEmpresa.ToString());
-                    PDFhtml = PDFhtml.Replace("@DireccionFarma", CM_DatosOCDefinitiva.DireccionFarma.ToString());
-                    PDFhtml = PDFhtml.Replace("@CUITEmpresa", CM_DatosOCDefinitiva.CUITEmpresa.ToString());
-                    PDFhtml = PDFhtml.Replace("@DireccionProv", CM_DatosOCDefinitiva.DireccionFarma.ToString());
-                    PDFhtml = PDFhtml.Replace("@DomicilioEntrega", CM_DatosOCDefinitiva.DomicilioEntrega.ToString());
-                    PDFhtml = PDFhtml.Replace("@Fe", CM_DatosOCDefinitiva.FechaInicioAct.ToString("d"));
-                    PDFhtml = PDFhtml.Replace("@PartidoFarma", CM_DatosOCDefinitiva.PartidoFarma.ToString());
-                    PDFhtml = PDFhtml.Replace("@LocalidadFarma", CM_DatosOCDefinitiva.LocalidadFarma.ToString());
-
-                    PDFhtml = PDFhtml.Replace("@Total", "Total pedido de Compra");
-                    foreach (var producto in ListadeItemsPC)
-                    {
-                        FilaProductos += "<tr>";
-                        FilaProductos += "<td>" + producto.NombreComercial + "</td>";
-                        FilaProductos += "<td>" + producto.Monodroga + "</td>";
-                        FilaProductos += "<td>" + producto.Marca + "</td>";
-                        FilaProductos += "<td>" + producto.Cantidad.ToString() + "</td>";
-                        FilaProductos += "<td>" + producto.PrecioUnitario.ToString("#,##0.00") + "</td>";
-                        FilaProductos += "<td>" + producto.Subtotal.ToString("#,##0.00") + "</td>";
-                        FilaProductos += "</tr>";
-                        TotalOC += producto.Subtotal;
-
-                    }
-
-                    PDFhtml = PDFhtml.Replace("@Items", FilaProductos);
-                    PDFhtml = PDFhtml.Replace("@TotOC", TotalOC.ToString("#,##0.00"));
-
-                    PDFhtml = PDFhtml.Replace("@Usuario", CM_DatosOCDefinitiva.NombreApellido.ToString());
-                    PDFhtml = PDFhtml.Replace("@AutoFecha", Fecha.ToString());
-                    break;
             }*/
             return PDFhtml;
 
         }
+        private static System.Drawing.Image ResizeImage(System.Drawing.Image image, int width, int height)
+        {
+            var destRect = new System.Drawing.Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
 
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = System.Drawing.Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new System.Drawing.Imaging.ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(System.Drawing.Drawing2D.WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, System.Drawing.GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
+
+        public static void CrearImagenIndicadores(TableLayoutPanel TLP_Indicadores) 
+        {
+            carpetaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            carpetaBase = Path.Combine(carpetaDocumentos, "KeyFacturation");
+
+
+            if (!Directory.Exists(carpetaBase))
+            {
+                Directory.CreateDirectory(carpetaBase);
+            }
+            string carpetaImagenes = Path.Combine(carpetaBase, "Imagenes");
+            if (!Directory.Exists(carpetaImagenes))
+                Directory.CreateDirectory(carpetaImagenes);
+
+            string rutaImagen = Path.Combine(carpetaImagenes, "PanelDatos.png");
+
+            // Crear imagen del TableLayoutPanel
+            Bitmap bmp = new Bitmap(TLP_Indicadores.Width, TLP_Indicadores.Height);
+            TLP_Indicadores.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height));
+
+            // Guardar la imagen
+            bmp.Save(rutaImagen, System.Drawing.Imaging.ImageFormat.Png);
+
+            // También la cargamos en la propiedad para usarla en el PDF
+            ImgPanelDatos = (System.Drawing.Image)bmp.Clone();
+        }
 
     }
 }

@@ -5,7 +5,7 @@
     <style>
         @page {
             size: A4;
-            margin: 25mm;
+            margin: 25px;
         }
 
         body {
@@ -14,26 +14,9 @@
             font-size: 10px;
         }
 
-        table.border {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-            table.border th, table.border td {
-                padding: 5px;
-                border: 1px solid black;
-                font-size: 12px;
-            }
-
-        .containerPrincipal {
-            width: 80%;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
         .container {
-            width: 60%; /* Reducido el ancho de los cuadros */
-            max-width: 600px;
+            width: 100%;
+            max-width: 100%;
             margin: 0 auto;
         }
 
@@ -51,26 +34,25 @@
             }
 
         .info-table {
+            width: 80%;
             border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
         }
 
             .info-table td {
                 border: 1px solid black;
                 padding: 5px;
                 font-size: 11px;
-                text-align: left;
-                vertical-align: top;
+                text-align: center;
+                vertical-align: middle;
             }
 
                 .info-table td:first-child {
-                    width: 40%; /* Mantiene el ancho fijo para la primera columna */
+                    width: 40%;
                     white-space: nowrap;
                 }
 
                 .info-table td:last-child {
-                    width: 60%; /* Permite que la segunda columna se expanda según el contenido */
+                    width: 60%;
                     word-wrap: break-word;
                 }
 
@@ -79,70 +61,91 @@
         }
 
         .large-spacer {
-            height: 100px;
+            height: 75px;
         }
 
         .title {
             font-size: 14px;
             font-weight: bold;
-            text-align: left;
-            margin-top: 20px;
-            margin-bottom: 5px;
             text-decoration: underline;
+            position: relative;
+            left: 450%; /* Ajusta este valor según el ancho de la tabla */
         }
+
+        .resultado {
+            background-color: @color; /*#007BFF;  Azul, podés cambiarlo por otro */
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+
     </style>
 </head>
 <body>
-    <div class="containerPrincipal">
+    <div class="container">
         <table class="header-table">
             <tr>
-                <td style="width: 30%;">@OC</td>
+                <td style="width: 30%;">@LogoOapce</td>
                 <td style="width: 40%;">INDICADORES DE OPERACIÓN DE IMPORTACIÓN</td>
-                <td style="width: 30%;">@NUMERO</td>
+                <td style="width: 30%;">@LogoSedex</td>
             </tr>
-        </table>
-    </div>
-
-    <div class="container">
-        <div class="title">Datos Generales</div>
-        <table class="info-table">
-            <!-- Primeras 10 filas -->
-            <tr><td>Fecha</td><td>@HoyFecha</td></tr>
-            <tr><td>Cliente</td><td>@Cliente</td></tr>
-            <tr><td>Vía</td><td>@Vía</td></tr>
-            <tr><td>Canal</td><td>@Canal</td></tr>
-            <tr><td>Despacho</td><td>@Despacho</td></tr>
-            <tr><td>Ingreso de mercadería</td><td>@IngresoMercadería</td></tr>
-            <tr><td>Cierre de ingreso a Terminal</td><td>@CierreIngreso</td></tr>
-            <tr><td>Fondos Aduana</td><td>@FondosAduana</td></tr>
-            <tr><td>Documentación original</td><td>@DocOriginal</td></tr>
-            <tr><td>Oficialización</td><td>@Oficialización</td></tr>
-            <tr><td>Retiro de carga</td><td>@Retiro de carga</td></tr>
-        </table>
-
-        <div class="spacer"></div>
-
-        <div class="title">Información Adicional</div>
-        <!-- Otras 2 filas con dos columnas -->
-        <table class="info-table">
-            <tr><td>Total de días hábiles</td><td>@TotalDiasHabiles</td></tr>
-            <tr><td>Resultado</td><td>@Resultado</td></tr>
         </table>
 
         <div class="large-spacer"></div>
 
-        <div class="title">Detalles de Desvío</div>
-        <!-- Últimas 2 filas con posibilidad de extenderse -->
-        <table class="info-table">
-            <tr><td>Tipo desvio</td><td>@TipoDesvio</td></tr>
-            <tr><td>Motivo</td><td>@Motivo</td></tr>
+        <div class="title">Datos Generales</div>
+        <div class="spacer"></div>
+        <table class="info-table" align="center">
+            <tr><td>N° KPI</td><td>@ID_KPI</td></tr>
+            <tr><td>FECHA</td><td>@HoyFecha</td></tr>
+            <tr><td>CLIENTE</td><td>@Cliente</td></tr>
+            <tr><td>VÍA</td><td>@Via</td></tr>
+            <tr><td>CANAL</td><td>@Canal</td></tr>
+            <tr><td>DESPACHO</td><td>@Despacho</td></tr>
+            <tr><td>INGRESO DE MERCADERÍA</td><td>@IngresoMercaderia</td></tr>
+            <tr><td>CIERRE DE INGRESO A TERMINAL</td><td>@CierreIngreso</td></tr>
+            <tr><td>FONDOS ADUANA</td><td>@FondosAduana</td></tr>
+            <tr><td>DOCUMENTACIÓN ORIGINAL</td><td>@DocOriginal</td></tr>
+            <tr><td>OFICIALIZACIÓN</td><td>@Oficialización</td></tr>
+            <tr><td>RETIRO DE CARGA</td><td>@Retirocarga</td></tr>
         </table>
 
         <div class="spacer"></div>
+        <div class="spacer"></div>
+
+        <div class="title">Información Adicional</div>
+        <div class="spacer"></div>
+        <table class="info-table" align="center">
+            <tr><td>TOTAL DE DÍAS HÁBILES</td><td>@TotalDiasHabiles</td></tr>
+            <tr><td>RESULTADO</td><td class="resultado">@Resultado</td></tr>
+        </table>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+
+
+        <div class="title">Indicadores</div>
+        <div class="spacer"></div>
+        <div style="text-align:center; margin: 10px 0;">
+            @Foto
+        </div>
+
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+
+        <div class="title">Detalles de Desvío</div>
+        <div class="spacer"></div>
+        <table class="info-table" align="center">
+            <tr><td>TIPO DESVÍO</td><td>@TipoDesvio</td></tr>
+            <tr><td>MOTIVO</td><td>@Motivo</td></tr>
+        </table>
+
+        <div class="spacer"></div>
+        <div class="spacer"></div>
 
         <div class="title">Aprobación</div>
-        <!-- Última fila con etiquetas -->
-        <table class="info-table">
+        <div class="spacer"></div>
+        <table class="info-table" align="center">
             <tr>
                 <td style="text-align: center; font-weight: bold;">Aprobado por</td>
                 <td style="text-align: center;">@Usuario</td>
@@ -150,12 +153,6 @@
                 <td style="text-align: center;">@FechaUltimaRevision</td>
             </tr>
         </table>
-
-        <!-- Espacio para imagen -->
-        <div class="large-spacer"></div>
-        <div style="text-align: center;">
-            <img src="@Imagen" alt="Imagen de referencia" width="100" height="100">
-        </div>
     </div>
 </body>
 </html>

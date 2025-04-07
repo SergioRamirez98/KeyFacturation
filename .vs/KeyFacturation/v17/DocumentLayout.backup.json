@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|d:\\users\\ramir\\source\\repos\\keyfacturation\\vista\\cv_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|solutionrelative:vista\\cv_kpi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|d:\\users\\ramir\\source\\repos\\keyfacturation\\vista\\cv_informes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|solutionrelative:vista\\cv_informes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|D:\\Users\\ramir\\source\\repos\\KeyFacturation\\vista\\resources\\plantilla.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|solutionrelative:vista\\resources\\plantilla.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|d:\\users\\ramir\\source\\repos\\keyfacturation\\vista\\cv_listaoperaciones.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|solutionrelative:vista\\cv_listaoperaciones.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B6ED504-244F-4B05-96CD-DDFDB94D96AF}|Servicios\\Servicios.csproj|d:\\users\\ramir\\source\\repos\\keyfacturation\\servicios\\cserv_crearpdf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B6ED504-244F-4B05-96CD-DDFDB94D96AF}|Servicios\\Servicios.csproj|solutionrelative:servicios\\cserv_crearpdf.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|d:\\users\\ramir\\source\\repos\\keyfacturation\\vista\\cv_informes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{4EDC2D8E-7C44-4BA8-BEAB-7979B3B1145D}|Vista\\Vista.csproj|solutionrelative:vista\\cv_informes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,34 +22,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CV_KPI.cs",
-              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_KPI.cs",
-              "RelativeDocumentMoniker": "Vista\\CV_KPI.cs",
-              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_KPI.cs",
-              "RelativeToolTip": "Vista\\CV_KPI.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowOEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T00:23:59.984Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Plantilla.html",
-              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\Resources\\Plantilla.html",
-              "RelativeDocumentMoniker": "Vista\\Resources\\Plantilla.html",
-              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\Resources\\Plantilla.html",
-              "RelativeToolTip": "Vista\\Resources\\Plantilla.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-03-29T14:32:11.18Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -60,16 +34,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CServ_CrearPDF.cs",
-              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Servicios\\CServ_CrearPDF.cs",
-              "RelativeDocumentMoniker": "Servicios\\CServ_CrearPDF.cs",
-              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Servicios\\CServ_CrearPDF.cs",
-              "RelativeToolTip": "Servicios\\CServ_CrearPDF.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAiwB4AAAAqAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "CV_ListaOperaciones.cs",
+              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_ListaOperaciones.cs",
+              "RelativeDocumentMoniker": "Vista\\CV_ListaOperaciones.cs",
+              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_ListaOperaciones.cs",
+              "RelativeToolTip": "Vista\\CV_ListaOperaciones.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAUwIEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T14:12:48.965Z",
+              "WhenOpened": "2025-04-06T22:41:09.928Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CV_Informes.cs",
+              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_Informes.cs",
+              "RelativeDocumentMoniker": "Vista\\CV_Informes.cs",
+              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_Informes.cs",
+              "RelativeToolTip": "Vista\\CV_Informes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T22:29:03.114Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CV_Informes.cs [Dise\u00F1o]",
+              "DocumentMoniker": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_Informes.cs",
+              "RelativeDocumentMoniker": "Vista\\CV_Informes.cs",
+              "ToolTip": "D:\\Users\\ramir\\source\\repos\\KeyFacturation\\Vista\\CV_Informes.cs [Dise\u00F1o]",
+              "RelativeToolTip": "Vista\\CV_Informes.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-06T22:28:10.736Z",
+              "EditorCaption": " [Dise\u00F1o]"
             }
           ]
         }
